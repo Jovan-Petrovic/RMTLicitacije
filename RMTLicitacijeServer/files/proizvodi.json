@@ -1,1 +1,60 @@
-[{"proizvod":{"type":"knjigaClass","autor":"a","izdavac":"a","godinaIzdanja":2000,"IDProizvoda":0,"nazivProizvoda":"a"},"vlasnik":"lukadlm97","cena":200.0},{"proizvod":{"type":"kozmetikaClass","proizvodjac":"a","namenjenaZa":"Zenski","IDProizvoda":1,"nazivProizvoda":"a"},"vlasnik":"lukadlm97","cena":2000.0},{"proizvod":{"type":"muzickaOpremaClass","proizvodjac":"b","kategorijaOpreme":"MuzickaPloca","godinaIzdanja":2000,"IDProizvoda":3,"nazivProizvoda":"b"},"vlasnik":"lukadlm97","cena":450.0},{"proizvod":{"type":"knjigaClass","autor":"p","izdavac":"p","godinaIzdanja":2008,"IDProizvoda":4,"nazivProizvoda":"p"},"vlasnik":"lukadlm97","cena":945.0}]
+[
+  {
+    "proizvod": {
+      "type": "knjigaClass",
+      "autor": "a",
+      "izdavac": "a",
+      "godinaIzdanja": 2000,
+      "IDProizvoda": 0,
+      "nazivProizvoda": "a"
+    },
+    "vlasnik": "lukadlm97",
+    "cena": 200.0
+  },
+  {
+    "proizvod": {
+      "type": "kozmetikaClass",
+      "proizvodjac": "a",
+      "namenjenaZa": "Zenski",
+      "IDProizvoda": 1,
+      "nazivProizvoda": "a"
+    },
+    "vlasnik": "lukadlm97",
+    "cena": 2000.0
+  },
+  {
+    "proizvod": {
+      "type": "muzickaOpremaClass",
+      "proizvodjac": "b",
+      "kategorijaOpreme": "MuzickaPloca",
+      "godinaIzdanja": 2000,
+      "IDProizvoda": 3,
+      "nazivProizvoda": "b"
+    },
+    "vlasnik": "lukadlm97",
+    "cena": 450.0
+  },
+  {
+    "proizvod": {
+      "type": "knjigaClass",
+      "autor": "p",
+      "izdavac": "p",
+      "godinaIzdanja": 2008,
+      "IDProizvoda": 4,
+      "nazivProizvoda": "p"
+    },
+    "vlasnik": "lukadlm97",
+    "cena": 945.0
+  },
+  {
+    "proizvod": {
+      "type": "sportskaOpremaClass",
+      "marka": "Atomic",
+      "model": "atomicX",
+      "IDProizvoda": 5,
+      "nazivProizvoda": "Skije"
+    },
+    "vlasnik": "jovanp98",
+    "cena": 4200.0
+  }
+]

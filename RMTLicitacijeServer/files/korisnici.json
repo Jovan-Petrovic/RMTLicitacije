@@ -70,5 +70,18 @@
         "iznos": 2000.0
       }
     ]
+  },
+  {
+    "IDKorisnika": 5,
+    "imePrezimeKorisnika": "Jovan Petrovic",
+    "username": "jovanp98",
+    "password": "Jovanp98",
+    "karticeKorisnika": [
+      {
+        "IDKartice": 987,
+        "tipKartice": "Debitna",
+        "iznos": 3400.0
+      }
+    ]
   }
 ]

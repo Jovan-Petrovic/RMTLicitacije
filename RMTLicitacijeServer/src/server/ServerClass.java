@@ -70,7 +70,7 @@ public class ServerClass {
                 .registerSubtype(MuzickaOpremaClass.class, "muzickaOpremaClass")
                 .registerSubtype(KucniAparatiClass.class, "kucniAparatiClass");
         
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
        
         
         try {
@@ -83,11 +83,11 @@ public class ServerClass {
                 if(stavkaProizvodaClass.getProizvod() instanceof KnjigaClass){
                     KnjigaClass knjiga =(KnjigaClass) stavkaProizvodaClass.getProizvod();
                     stavkaProizvodaClass.setProizvod(knjiga);
-                    System.out.println(knjiga.toString());
+                    //System.out.println(knjiga.toString());
                 }else if(stavkaProizvodaClass.getProizvod() instanceof KozmetikaClass){
                     KozmetikaClass kozmetika = (KozmetikaClass) stavkaProizvodaClass.getProizvod();
                     stavkaProizvodaClass.setProizvod(kozmetika);
-                   System.out.println(kozmetika.toString());
+                   //System.out.println(kozmetika.toString());
                 }else if(stavkaProizvodaClass.getProizvod() instanceof KucniAparatiClass){
                     KucniAparatiClass aparati = (KucniAparatiClass) stavkaProizvodaClass.getProizvod();
                     stavkaProizvodaClass.setProizvod(aparati);

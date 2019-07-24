@@ -279,7 +279,7 @@ public class ServerNitClass extends Thread{
                 .registerSubtype(MuzickaOpremaClass.class, "muzickaOpremaClass")
                 .registerSubtype(KucniAparatiClass.class, "kucniAparatiClass");
         
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
        
         try {
             FileWriter upisivac = new FileWriter("files/proizvodi.json");
@@ -830,6 +830,7 @@ public class ServerNitClass extends Thread{
                 for(KarticaClass kartice:korisnik.getKarticeKorisnika()){
                     if(kartice.getIDKartice() == IDKartice){
                         kartice.setIznos(kartice.getIznos()+iznos);
+                        dodavanjeNovogKorisnikaUFile();
                         return;
                     }
                 }
