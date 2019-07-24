@@ -56,5 +56,16 @@
     },
     "vlasnik": "jovanp98",
     "cena": 4200.0
+  },
+  {
+    "proizvod": {
+      "type": "sportskaOpremaClass",
+      "marka": "mkmk",
+      "model": "csdcs",
+      "IDProizvoda": 6,
+      "nazivProizvoda": "psodap"
+    },
+    "vlasnik": "lukadlm97",
+    "cena": 200.0
   }
 ]
