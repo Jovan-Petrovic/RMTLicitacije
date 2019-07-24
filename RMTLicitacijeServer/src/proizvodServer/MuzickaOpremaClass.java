@@ -22,7 +22,7 @@ public class MuzickaOpremaClass extends ProizvodClass{
 
     @Override
     public String toString() {
-        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\n"+"MuzickaOpremaClass{" + "proizvodjac=" + proizvodjac + ", kategorijaOpreme=" + kategorijaOpreme + ", godinaIzdanja=" + godinaIzdanja + '}';
+        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\n\t"+"MuzickaOpremaClass{" + "proizvodjac=" + proizvodjac + ", kategorijaOpreme=" + kategorijaOpreme + ", godinaIzdanja=" + godinaIzdanja + '}';
     }
 
     public void setProizvodjac(String proizvodjac) {

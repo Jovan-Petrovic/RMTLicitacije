@@ -15,7 +15,7 @@ public class KucniAparatiClass extends ProizvodClass{
 
     @Override
     public String toString() {
-        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"KucniAparatiClass{" + "proizvodjac=" + proizvodjac + ", godinaProizvodnje=" + godinaProizvodnje + '}';
+        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\n\t"+"KucniAparatiClass{" + "proizvodjac=" + proizvodjac + ", godinaProizvodnje=" + godinaProizvodnje + '}';
     }
 
     public void setProizvodjac(String proizvodjac) {

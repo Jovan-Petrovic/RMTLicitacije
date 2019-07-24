@@ -18,7 +18,7 @@ public class KozmetikaClass extends ProizvodClass{
 
     @Override
     public String toString() {
-        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"KozmetikaClass{" + "proizvodjac=" + proizvodjac + ", namenjenaZa=" + namenjenaZa + '}';
+        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\n\t"+"KozmetikaClass{" + "proizvodjac=" + proizvodjac + ", namenjenaZa=" + namenjenaZa + '}';
     }
 
     public void setProizvodjac(String proizvodjac) {

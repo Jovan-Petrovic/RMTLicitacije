@@ -31,7 +31,7 @@ public class SportskaOpremaClass extends ProizvodClass{
 
     @Override
     public String toString() {
-        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\t"+"SportskaOprema{" + "marka=" + marka + ", model=" + model + '}';
+        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\n\t"+"SportskaOprema{" + "marka=" + marka + ", model=" + model + '}';
     }
 
     

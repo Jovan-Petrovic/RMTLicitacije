@@ -95,7 +95,48 @@ public class ServerNitClass extends Thread{
             Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    private void prikaziSveArtikle() {    	
+    	for(StavkaProizvodaClass stavka : proizvodiUBazi) {
+    		izlazniTokKaKlijentu.println(stavka.toString());
+    	}
+    }
+    
+    private void prikaziKnjige() {
+    	for(StavkaProizvodaClass stavka : proizvodiUBazi) {
+    		if(stavka.proizvod instanceof KnjigaClass) 
+    			izlazniTokKaKlijentu.println(stavka.toString());
+    	}
+    }
+    
+    private void prikaziKozmetiku() {
+    	for(StavkaProizvodaClass stavka : proizvodiUBazi) {
+    		if(stavka.proizvod instanceof KozmetikaClass) 
+    			izlazniTokKaKlijentu.println(stavka.toString());
+    	}
+    }
+    
+    private void prikaziKucneAparate() {
+    	for(StavkaProizvodaClass stavka : proizvodiUBazi) {
+    		if(stavka.proizvod instanceof KucniAparatiClass) 
+    			izlazniTokKaKlijentu.println(stavka.toString());
+    	}
+    }
+    
+    private void prikaziMuzickuOpremu() {
+    	for(StavkaProizvodaClass stavka : proizvodiUBazi) {
+    		if(stavka.proizvod instanceof MuzickaOpremaClass) 
+    			izlazniTokKaKlijentu.println(stavka.toString());
+    	}
+    }
+    
+    private void prikaziSportskuOpremu() {
+    	for(StavkaProizvodaClass stavka : proizvodiUBazi) {
+    		if(stavka.proizvod instanceof SportskaOpremaClass) 
+    			izlazniTokKaKlijentu.println(stavka.toString());
+    	}
+    }
+    
     private void razgledanjeArtikala() {
         boolean razgledanje = true;
         izborRazgledanjeMeni izbor = izborRazgledanjeMeni.Nedefinisano;
@@ -114,26 +155,32 @@ public class ServerNitClass extends Thread{
             }
             if(izbor == izborRazgledanjeMeni.Sve || izborTemp.equals("1")){
                 izlazniTokKaKlijentu.println("SVE");
+                prikaziSveArtikle();
                 izbor = izborRazgledanjeMeni.Nedefinisano;
             }else if(izbor == izborRazgledanjeMeni.Knjige || izborTemp.equals("2")){
                 izlazniTokKaKlijentu.println("Knjige");
-                  izbor = izborRazgledanjeMeni.Nedefinisano;
+                prikaziKnjige();
+                izbor = izborRazgledanjeMeni.Nedefinisano;
             }
             else if(izbor == izborRazgledanjeMeni.Kozmetika || izborTemp.equals("3")){
                 izlazniTokKaKlijentu.println("Kozmetika");
+                prikaziKozmetiku();
                  izbor = izborRazgledanjeMeni.Nedefinisano;
             }else if(izbor == izborRazgledanjeMeni.KucniAparati|| izborTemp.equals("4") || izborTemp.equals("Kucni aparati")){
                 izlazniTokKaKlijentu.println("Kucni aparati");
+                prikaziKucneAparate();
                   izbor = izborRazgledanjeMeni.Nedefinisano;
             }else if(izbor == izborRazgledanjeMeni.MuzickaOprema || izborTemp.equals("5") || izborTemp.equals("Muzicka oprema")){
                izlazniTokKaKlijentu.println("Muzicka oprema");
+               prikaziMuzickuOpremu();
               izbor = izborRazgledanjeMeni.Nedefinisano;
             }else if(izbor == izborRazgledanjeMeni.SportskaOprema || izborTemp.equals("6") || izborTemp.equals("Sportska oprema")){
                izlazniTokKaKlijentu.println("Sportska oprema");
-                  izbor = izborRazgledanjeMeni.Nedefinisano;
+               prikaziSportskuOpremu();
+               izbor = izborRazgledanjeMeni.Nedefinisano;
             }else if(izbor == izborRazgledanjeMeni.Odjava || izborTemp.equals("7")){
                 razgledanje = false;
-                 izbor = izborRazgledanjeMeni.Nedefinisano;
+                izbor = izborRazgledanjeMeni.Nedefinisano;
                 return;
             }else{
                 System.out.println("Neispravan unos!");

@@ -16,7 +16,7 @@ public class KnjigaClass extends ProizvodClass{
 
     @Override
     public String toString() {
-        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\n"+"KnjigaClass{" + "autor=" + autor + ", izdavac=" + izdavac + ", godinaIzdanja=" + godinaIzdanja + '}';
+        return "Proizvod: "+IDProizvoda+" Naziv: "+nazivProizvoda+"\n\t"+"KnjigaClass{" + "autor=" + autor + ", izdavac=" + izdavac + ", godinaIzdanja=" + godinaIzdanja + '}';
     }
 
     public void setAutor(String autor) {
