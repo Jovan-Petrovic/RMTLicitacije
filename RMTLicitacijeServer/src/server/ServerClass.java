@@ -125,7 +125,7 @@ public class ServerClass {
                 System.out.println("Klijent konektovan");
                 for(int i=0;i<klijenti.length;i++){
                     if(klijenti[i] == null){
-                        klijenti[i] = new ServerNitClass(klijentSoket,korisnici,proizvodiZaLicitaciju);
+                        klijenti[i] = new ServerNitClass(klijentSoket,korisnici,proizvodiZaLicitaciju,klijenti,i);
                         klijenti[i].start();
                         break;
                     }
