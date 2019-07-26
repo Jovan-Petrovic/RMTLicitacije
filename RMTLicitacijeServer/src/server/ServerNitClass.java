@@ -82,15 +82,16 @@ public class ServerNitClass extends Thread {
         while (proizvodiUBazi != null) {
             double trenutnaCena = trenutnoLicitirani.getCena();
             LinkedList<String> lideri = new LinkedList<String>();
-            for (int i = 0; i < klijentiNiti.length; i++) {
+            for (int i = pocetniZaIspisProizvoda; i < klijentiNiti.length; i++) {
                 if (klijentiNiti[i] != null && usernameULicitaciji.contains(klijentiNiti[i].username)) {
                     klijentiNiti[i].izlazniTokKaKlijentu.println(trenutnoLicitirani.toString());
                     klijentiNiti[i].izlazniTokKaKlijentu.println("Pocetna cena proizvoda iznosi: " + trenutnoLicitirani.getCena());
                 }
             }
-            //10 sec pauze
+            //
+            // do ovde radi!!!
             do {
-                for (int i = pocetniZaIspisProizvoda; i < klijentiNiti.length; i++) {
+                for (int i = 0; i < klijentiNiti.length; i++) {
                     if (klijentiNiti[i] != null && usernameULicitaciji.contains(klijentiNiti[i].username)) {
                         klijentiNiti[i].izlazniTokKaKlijentu.println("Da li prihvatate trenutnu cenu od: " + trenutnaCena + "? (da=DA=Da=dA ako prihvatate/ne = ako ne prihvatate)");
                     }
