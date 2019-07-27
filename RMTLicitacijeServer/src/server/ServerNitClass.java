@@ -69,7 +69,7 @@ public class ServerNitClass extends Thread {
     }
 
     public void Licitacija() {
-        izlazniTokKaKlijentu.println("Za izlazak iz Licitacije napisite !q u suprotnom samo ENTER!");
+        izlazniTokKaKlijentu.println("Za izlazak iz Licitacije napisite !q u suprotnom samo ENTER");
 
         StavkaProizvodaClass trenutnoLicitirani = null;
 
