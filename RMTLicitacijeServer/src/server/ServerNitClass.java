@@ -121,11 +121,12 @@ public class ServerNitClass extends Thread {
             for (int i = 0; i < lideri.size(); i++) {
                 System.out.println(lideri.get(i));
             }
-            //doradicemo sta i kako jos treba
+
+            //doradicemo sta i kako
             //proizvodiUBazi.removeFirst();
             //trenutnoLicitirani = proizvodiUBazi.getFirst();
             
-
+            // konflikt resen manuelno, proba commitovanja
         }
     }
 
