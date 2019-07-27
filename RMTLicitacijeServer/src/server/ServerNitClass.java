@@ -51,6 +51,7 @@ public class ServerNitClass extends Thread {
     int brojProizvoda = 0;
     ServerNitClass[] klijentiNiti = new ServerNitClass[20];
     int pocetniZaIspisProizvoda = 0;
+    static LinkedList<String> lideri = new LinkedList<String>();
 
     ServerNitClass(Socket klijentSoket, LinkedList<KorisnikClass> korisnici, LinkedList<StavkaProizvodaClass> poizvodi, ServerNitClass[] klijenti,int i) {
         soketZaKomunikaciju = klijentSoket;
@@ -79,9 +80,13 @@ public class ServerNitClass extends Thread {
             }
         }
         trenutnoLicitirani = proizvodiUBazi.getFirst();
+        
+        
+        
+        
         while (proizvodiUBazi != null) {
             double trenutnaCena = trenutnoLicitirani.getCena();
-            LinkedList<String> lideri = new LinkedList<String>();
+            
             for (int i = pocetniZaIspisProizvoda; i < klijentiNiti.length; i++) {
                 if (klijentiNiti[i] != null && usernameULicitaciji.contains(klijentiNiti[i].username)) {
                     klijentiNiti[i].izlazniTokKaKlijentu.println(trenutnoLicitirani.toString());
@@ -90,53 +95,36 @@ public class ServerNitClass extends Thread {
             }
             //
             // do ovde radi!!!
-            do {
-                for (int i = 0; i < klijentiNiti.length; i++) {
-                    if (klijentiNiti[i] != null && usernameULicitaciji.contains(klijentiNiti[i].username)) {
-                        klijentiNiti[i].izlazniTokKaKlijentu.println("Da li prihvatate trenutnu cenu od: " + trenutnaCena + "? (da=DA=Da=dA ako prihvatate/ne = ako ne prihvatate)");
-                    }
+           
+            for(int i = 0;i < klijentiNiti.length;i++){
+                 if (klijentiNiti[i] != null && usernameULicitaciji.contains(klijentiNiti[i].username)) {
+                    klijentiNiti[i].izlazniTokKaKlijentu.println("zelite li da prihvatite " + trenutnaCena + "?");
+                    String izbor = "";
                     try {
-                        if (klijentiNiti[i].ulazniTokOdKlijenta.readLine().toLowerCase().equals("da")) {
-                            lideri.add(username);
-                        } else {
-                            if (lideri.contains(username)) {
-                                lideri.remove(username);
-                            }
-                        }
+                        izbor = ulazniTokOdKlijenta.readLine();
                     } catch (IOException ex) {
                         Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                }
-                if (lideri.size() == 1) {
-                    for (int i = 0; i < klijentiNiti.length; i++) {
-                        if (klijentiNiti[i] != null && usernameULicitaciji.contains(klijentiNiti[i].username)) {
-                            klijentiNiti[i].izlazniTokKaKlijentu.println("Prodato: " + lideri.getFirst());
-                        }
-                    }
-
-                    break;
-                } else {
-                    if (lideri.size() > 1) {
-                        trenutnaCena = povecavanjeCene(trenutnaCena);
-                        izlazniTokKaKlijentu.println("Za izlazak iz Licitacije napisite !q u suprotnom samo ENTER!");
-                        try {
-                            if (ulazniTokOdKlijenta.readLine().contains("!q")) {
-                                return;
+                    if (izbor.toLowerCase().equals("da")) {
+                        for (int j = 0; j < klijentiNiti.length; j++) {
+                            if (klijentiNiti[j] != null && usernameULicitaciji.contains(klijentiNiti[j].username)) {
+                                klijentiNiti[j].izlazniTokKaKlijentu.println("Klijent " + username + " je licitirao!"+trenutnoLicitirani.proizvod.getIDProizvoda());
                             }
-                        } catch (IOException ex) {
-                            Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        continue;
+                    } else {
+                        if (lideri.contains(klijentiNiti[i].username)) {
+                            lideri.remove(klijentiNiti[i].username);
+                        }
                     }
                 }
-                //prebaci proizvod na zadnji!!!
-
-            } while (true);
-
-            //doradicemo sta i kako
-            proizvodiUBazi.removeFirst();
-            trenutnoLicitirani = proizvodiUBazi.getFirst();
+            }
+            for (int i = 0; i < lideri.size(); i++) {
+                System.out.println(lideri.get(i));
+            }
+            //doradicemo sta i kako jos treba
+            //proizvodiUBazi.removeFirst();
+            //trenutnoLicitirani = proizvodiUBazi.getFirst();
+            
 
         }
     }
