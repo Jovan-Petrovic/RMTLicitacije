@@ -53,7 +53,7 @@ public class ServerNitClass extends Thread {
     int pocetniZaIspisProizvoda = 0;
     static LinkedList<String> lideri = new LinkedList<String>();
     static LinkedList<String> vecPitan = new LinkedList<String>();
-            
+          
 
     ServerNitClass(Socket klijentSoket, LinkedList<KorisnikClass> korisnici, LinkedList<StavkaProizvodaClass> poizvodi, ServerNitClass[] klijenti,int i) {
         soketZaKomunikaciju = klijentSoket;
@@ -115,7 +115,7 @@ public class ServerNitClass extends Thread {
                         for (int j = 0; j < klijentiNiti.length; j++) {
                             if (klijentiNiti[j] != null && usernameULicitaciji.contains(klijentiNiti[j].username)) {
                                 klijentiNiti[j].izlazniTokKaKlijentu.println("Klijent " + username + " je licitirao!"+trenutnoLicitirani.proizvod.getIDProizvoda());
-                                lideri.add(klijentiNiti[j].username);
+                                lideri.add(klijentiNiti[i].username);
                             }
                         }
                     } else {
@@ -125,16 +125,9 @@ public class ServerNitClass extends Thread {
                     }
                 }
             }
-            for(int i=0;i<klijentiNiti.length;i++){
-                try {
-                    klijentiNiti[i].join();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
             trenutnaCena = povecavanjeCene(trenutnaCena);
             vecPitan = new LinkedList<String>();
-           }while (lideri.size() != 1);
+           }while (lideri.size() > 1);
             
             for (int i = 0; i < lideri.size(); i++) {
                 System.out.println(lideri.get(i));
