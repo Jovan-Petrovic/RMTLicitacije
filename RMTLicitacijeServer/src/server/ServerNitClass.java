@@ -87,8 +87,7 @@ public class ServerNitClass extends Thread {
        while(LicitacijaClass.imaJosProizvoda){
            if(!LicitacijaClass.pocelaLicitacija){
                LicitacijaClass.Licitiranje(klijentiNiti,username);
-           }else{
-               //moze malo da se uspori
+           }else{               //moze malo da se uspori
                izlazniTokKaKlijentu.println("Licitacija u toku, molimo sacekajte");
            }
        }

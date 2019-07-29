@@ -5,7 +5,10 @@
  */
 package server;
 
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import proizvodServer.StavkaProizvodaClass;
 
 /**
@@ -39,9 +42,74 @@ public class LicitacijaClass {
     }
     
     public static void Licitiranje(ServerNitClass[] klijenti,String username){
-        pocelaLicitacija = true;
-        korisniciULicitaciji.addLast(username);
-        for (int i = 0; i < klijenti.length; i++) {
+       trenutnaCena = trenutnoLicitiraniProizvod.getCena();
+        
+       // pocelaLicitacija = true;
+        korisniciULicitaciji.add(username);
+       
+       nudjenjeProizvoda(klijenti);
+        String izbor="";
+        indeksPoslednjegOdgovora = -1;
+        do{
+            if(indeksPoslednjegOdgovora != -1){
+                trenutnaCena = povecanaCena(trenutnaCena);
+            }
+            indeksPoslednjegOdgovora = -1;
+            nadmetanje(klijenti, trenutnaCena);
+        } while (lideriULicitaciji.size() != 1 && lideriULicitaciji.size() != 0);
+        indeksPoslednjegOdgovora = -1;
+        if (lideriULicitaciji.size() == 0) {
+            for (int i = 0; i < klijenti.length; i++) {
+                if (klijenti[i] != null) {
+                    if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijenti[i].username)) {
+                        klijenti[i].izlazniTokKaKlijentu.println("Nema zainteresovanih za proizvod!");
+                        indeksPoslednjegOdgovora++;
+                    }
+                }
+            }
+        }else{
+            String pobednik = lideriULicitaciji.getFirst();
+            for (int i = 0; i < klijenti.length; i++) {
+                if (klijenti[i] != null) {
+                    if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijenti[i].username)) {
+                        klijenti[i].izlazniTokKaKlijentu.println("Pobedio je: "+pobednik+" i kupio prizvod: "+trenutnoLicitiraniProizvod.toString()+" po ceni od: "+trenutnaCena);
+                        indeksPoslednjegOdgovora++;
+                    }
+                }
+            }
+        }
+    }
+    
+    public static double povecanaCena(double iznos){
+        return 1.2*iznos;
+    }
+    
+    public static void nadmetanje(ServerNitClass[] klijenti,double trenutnaCena){
+        String izbor="";
+        for (int j = 0; j < klijenti.length; j++) {
+            if (klijenti[j] != null) {
+                if (indeksPoslednjegOdgovora < j && korisniciULicitaciji.contains(klijenti[j].username)) {
+                    klijenti[j].izlazniTokKaKlijentu.println("Zelite li da prihvatite cenu od (da):" + trenutnaCena);
+                    try {
+                        izbor = klijenti[j].ulazniTokOdKlijenta.readLine();
+                        pocelaLicitacija = true;
+                    } catch (IOException ex) {
+                        Logger.getLogger(LicitacijaClass.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(izbor.toLowerCase().equals("da")){
+                        lideriULicitaciji.add(klijenti[j].username);
+                    }else{
+                        lideriULicitaciji.remove(klijenti[j].username);
+                    }
+                    indeksPoslednjegOdgovora++;
+                }
+            }
+        }
+    }
+    
+    
+    public static void nudjenjeProizvoda(ServerNitClass[] klijenti){
+         for (int i = 0; i < klijenti.length; i++) {
             if (klijenti[i] != null) {
                 if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijenti[i].username)) {
                     klijenti[i].izlazniTokKaKlijentu.println(trenutnoLicitiraniProizvod.toString());
@@ -49,18 +117,8 @@ public class LicitacijaClass {
                     indeksPoslednjegOdgovora++;
                 }
             }
-           
-
         }
-        
-        indeksPoslednjegOdgovora = -1;
-        for (int j = 0; j < klijenti.length; j++) {
-            if (klijenti[j] != null && indeksPoslednjegOdgovora < j && korisniciULicitaciji.contains(klijenti[j].username)) {
-                System.out.println("Zelite li da prihvatite cenu od " + trenutnaCena);
-                indeksPoslednjegOdgovora++;
-            }
-        }
-        indeksPoslednjegOdgovora++;
+         LicitacijaClass.pocelaLicitacija = true;
     }
     
 
