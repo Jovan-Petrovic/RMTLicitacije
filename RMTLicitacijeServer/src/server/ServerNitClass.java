@@ -53,6 +53,7 @@ public class ServerNitClass extends Thread {
     int pocetniZaIspisProizvoda = 0;
     static LinkedList<String> lideri = new LinkedList<String>();
     static LinkedList<String> vecPitan = new LinkedList<String>();
+    static LicitacijaClass licitacija;
           
 
     ServerNitClass(Socket klijentSoket, LinkedList<KorisnikClass> korisnici, LinkedList<StavkaProizvodaClass> poizvodi, ServerNitClass[] klijenti,int i) {
@@ -68,9 +69,37 @@ public class ServerNitClass extends Thread {
         }
         klijentiNiti = klijenti;
         pocetniZaIspisProizvoda = i;
+        if(klijenti[1] == null){
+            LicitacijaClass.trenutnoLicitiraniProizvod = proizvodiUBazi.getFirst();
+        }
     }
 
-    public void Licitacija() {
+    
+    
+    private void Licitacija() {
+        if (LicitacijaClass.korisniciULicitaciji.size() == 0) {
+            izlazniTokKaKlijentu.println(LicitacijaClass.licitacijaPrvog(username));
+
+            while (LicitacijaClass.korisniciULicitaciji.size() < 2) {
+                //ovde mozemo malko da usporimo sa nekim timeout-om
+            }
+        }
+       while(LicitacijaClass.imaJosProizvoda){
+           if(!LicitacijaClass.pocelaLicitacija){
+               LicitacijaClass.Licitiranje(klijentiNiti,username);
+           }else{
+               //moze malo da se uspori
+               izlazniTokKaKlijentu.println("Licitacija u toku, molimo sacekajte");
+           }
+       }
+    }
+    
+    
+    
+
+    
+    
+    public void LicitacijaC() {
         StavkaProizvodaClass trenutnoLicitirani = null;
 
         usernameULicitaciji.add(username);
@@ -650,6 +679,7 @@ public class ServerNitClass extends Thread {
     private double povecavanjeCene(double trenutnaCena) {
         return 1.20 * trenutnaCena;
     }
+
 
     public enum izborLogMeni {
         Prijava,
