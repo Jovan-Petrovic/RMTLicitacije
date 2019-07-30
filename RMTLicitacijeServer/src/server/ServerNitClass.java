@@ -91,9 +91,9 @@ public class ServerNitClass extends Thread {
             LicitacijaClass.drzanjeNaCekanju(this);
         }
         
-        while (proizvodiUBazi != null) {            
-            LicitacijaClass.klasicnaLicitacija(klijentiNiti);
+        while (proizvodiUBazi != null) {
             LicitacijaClass.trenutnoLicitiraniProizvod = sledeciProizvodZaLicitaciju();
+            LicitacijaClass.klasicnaLicitacija(klijentiNiti);
         }
     }
     
