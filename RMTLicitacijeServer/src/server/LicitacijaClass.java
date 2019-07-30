@@ -26,6 +26,9 @@ public class LicitacijaClass {
     public static LinkedList<String> korisniciNaCekanju = new LinkedList<String>();
     public static boolean prodatProizvod = false;
     public static String pobednik = null;
+    public static boolean osvezenRazunPobednika = false;
+    public static boolean uspesnaTransakcija = false;
+    public static boolean dodatNovacVlasniku = false;
     
 
    

@@ -31,6 +31,8 @@ import proizvodServer.MuzickaOpremaClass.KategorijaMuzickeOpreme;
 import proizvodServer.ProizvodClass;
 import proizvodServer.SportskaOpremaClass;
 import proizvodServer.StavkaProizvodaClass;
+import static server.LicitacijaClass.indeksPoslednjegOdgovora;
+import static server.LicitacijaClass.korisniciULicitaciji;
 
 /**
  *
@@ -93,25 +95,86 @@ public class ServerNitClass extends Thread {
         umanjivanjeIznosaNaRacunu();
 
         while (proizvodiUBazi != null) {
+            LicitacijaClass.osvezenRazunPobednika = false;
+            LicitacijaClass.dodatNovacVlasniku = false;
+            
             LicitacijaClass.trenutnoLicitiraniProizvod = sledeciProizvodZaLicitaciju();
             LicitacijaClass.klasicnaLicitacija(klijentiNiti);
+             LicitacijaClass.uspesnaTransakcija = false;
             umanjivanjeIznosaNaRacunu();
-      }
+        }
+    }
+
+    public void osvezavanjeBazeProizvoda() {
+        RuntimeTypeAdapterFactory<ProizvodClass> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+                .of(ProizvodClass.class, "type")
+                .registerSubtype(KnjigaClass.class, "knjigaClass")
+                .registerSubtype(SportskaOpremaClass.class, "sportskaOpremaClass")
+                .registerSubtype(KozmetikaClass.class, "kozmetikaClass")
+                .registerSubtype(MuzickaOpremaClass.class, "muzickaOpremaClass")
+                .registerSubtype(KucniAparatiClass.class, "kucniAparatiClass");
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
+
+        try {
+            FileWriter upisivac = new FileWriter("files/proizvodi.json");
+            String proizvodUString = gson.toJson(proizvodiUBazi);
+
+            upisivac.write(proizvodUString);
+
+            upisivac.close();
+            return;
+        } catch (IOException ex) {
+            Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
-    public void umanjivanjeIznosaNaRacunu(){
-        if(username.equals(LicitacijaClass.pobednik)){
-            for(KorisnikClass korisnik:registrovaniKorisnici){
-                if(korisnik.getUsername().equals(username)){
-                    double iznosNaKartici = korisnik.getKarticeKorisnika().getIznos();
-                    korisnik.getKarticeKorisnika().setIznos(iznosNaKartici-LicitacijaClass.trenutnaCena);
+    public void umanjivanjeIznosaNaRacunu() {
+        for (KorisnikClass korisnik : registrovaniKorisnici) {
+            if (korisnik.getUsername().equals(LicitacijaClass.pobednik) && !LicitacijaClass.osvezenRazunPobednika) {
+                double trenutniIznos = korisnik.getKarticeKorisnika().getIznos();
+                if (korisnik.getKarticeKorisnika().getTipKartice() == KarticaClass.TipKartice.Kreditna) {
+                    korisnik.getKarticeKorisnika().setIznos(trenutniIznos - LicitacijaClass.trenutnaCena);
                     osvezavanjeBazeKorisnika();
+                    LicitacijaClass.osvezenRazunPobednika = true;
+                    LicitacijaClass.uspesnaTransakcija = true;
+                    dodavanjeNovcaNaRacunVlasnika();
+                } else {
+                    if (trenutniIznos < LicitacijaClass.trenutnaCena) {
+                        LicitacijaClass.uspesnaTransakcija = false;
+                        for (int i = 0; i < klijentiNiti.length; i++) {
+                            if (klijentiNiti[i] != null) {
+                                if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijentiNiti[i].username)) {
+                                    klijentiNiti[i].izlazniTokKaKlijentu.println("Transakcija neuspela zbog nedovoljno novca na racunu. Proizvod ce naknadno biti ponovo na licitaciji.");
+                                    indeksPoslednjegOdgovora++;
+                                }
+                            }
+                        }
+                    } else {
+                        korisnik.getKarticeKorisnika().setIznos(trenutniIznos - LicitacijaClass.trenutnaCena);
+                        osvezavanjeBazeKorisnika();
+                        LicitacijaClass.osvezenRazunPobednika = true;
+                        LicitacijaClass.uspesnaTransakcija = true;
+                        dodavanjeNovcaNaRacunVlasnika();
+                    }
                 }
             }
         }
     }
     
-    public void osvezavanjeBazeKorisnika(){
+    public void dodavanjeNovcaNaRacunVlasnika(){
+        for (KorisnikClass korisnik:registrovaniKorisnici) {
+            if(korisnik.getUsername().equals(LicitacijaClass.trenutnoLicitiraniProizvod.getVlasnik()) && !LicitacijaClass.dodatNovacVlasniku){
+                double trenutanIznos =korisnik.getKarticeKorisnika().getIznos();
+                korisnik.getKarticeKorisnika().setIznos(trenutanIznos+LicitacijaClass.trenutnaCena);
+                LicitacijaClass.dodatNovacVlasniku = true;
+                osvezavanjeBazeKorisnika();
+            }
+        }
+    }
+
+    public void osvezavanjeBazeKorisnika() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try {
@@ -125,23 +188,24 @@ public class ServerNitClass extends Thread {
             Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public StavkaProizvodaClass sledeciProizvodZaLicitaciju(){
+
+    public StavkaProizvodaClass sledeciProizvodZaLicitaciju() {
         StavkaProizvodaClass prodatProizvod = null;
         StavkaProizvodaClass elementZaPrebacivanje = null;
-        if(LicitacijaClass.prodatProizvod){
-            prodatProizvod=proizvodiUBazi.pop();
-            
+        if (LicitacijaClass.prodatProizvod && LicitacijaClass.uspesnaTransakcija) {
+            prodatProizvod = proizvodiUBazi.pop();
+
             //napraviti metode za pamcenje prozivoda za korisnika
-        }else{
+        } else {
             elementZaPrebacivanje = proizvodiUBazi.pop();
             proizvodiUBazi.addLast(elementZaPrebacivanje);
             //pomeri na kraj prvi i predji na sledeci
         }
+        osvezavanjeBazeProizvoda();
         LicitacijaClass.prodatProizvod = false;
         return proizvodiUBazi.getFirst();
     }
-    
+
     public void LicitacijaC() {
         StavkaProizvodaClass trenutnoLicitirani = null;
 
