@@ -61,6 +61,8 @@ public class LicitacijaClass {
             nadmetanje(klijenti, trenutnaCena);
         } while (lideriULicitaciji.size() > 1);
         indeksPoslednjegOdgovora = -1;
+        
+        
         if (lideriULicitaciji.size() == 0) {
             for (int i = 0; i < klijenti.length; i++) {
                 if (klijenti[i] != null) {
@@ -111,10 +113,14 @@ public class LicitacijaClass {
                     } catch (IOException ex) {
                         Logger.getLogger(LicitacijaClass.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    if(izbor.toLowerCase().equals("da")){
-                        lideriULicitaciji.add(klijenti[j].username);
-                    }else{
-                        lideriULicitaciji.remove(klijenti[j].username);
+                    if (izbor.toLowerCase().equals("da")) {
+                        if (!lideriULicitaciji.contains(klijenti[j].username)) {
+                            lideriULicitaciji.add(klijenti[j].username);
+                        }
+                    } else {
+                        if (lideriULicitaciji.contains(klijenti[j].username)) {
+                            lideriULicitaciji.remove(klijenti[j].username);
+                        }
                     }
                     indeksPoslednjegOdgovora++;
                 }
