@@ -25,6 +25,7 @@ public class LicitacijaClass {
     public static boolean imaJosProizvoda = true;
     public static LinkedList<String> korisniciNaCekanju = new LinkedList<String>();
     public static boolean prodatProizvod = false;
+    public static String pobednik = null;
     
 
    
@@ -81,6 +82,7 @@ public class LicitacijaClass {
                     if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijenti[i].username)) {
                         klijenti[i].izlazniTokKaKlijentu.println("Pobedio je: "+pobednik+" i kupio prizvod: "+trenutnoLicitiraniProizvod.toString()+" po ceni od: "+trenutnaCena);
                         indeksPoslednjegOdgovora++;
+                        LicitacijaClass.pobednik = pobednik;
                         prodatProizvod = true;
                     }
                 }
@@ -91,7 +93,7 @@ public class LicitacijaClass {
         lideriULicitaciji = new LinkedList<String>();
         indeksPoslednjegOdgovora = -1;
         pocelaLicitacija = false;
-        trenutnaCena = 0;
+       // trenutnaCena = 0;
         for(String users:korisniciNaCekanju){
             if(!korisniciULicitaciji.contains(users)){
                 korisniciULicitaciji.add(users);
@@ -134,6 +136,7 @@ public class LicitacijaClass {
                     if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(niti[i].username)) {
                         niti[i].izlazniTokKaKlijentu.println("Pobedio je: "+pobednik+" i kupio prizvod: "+trenutnoLicitiraniProizvod.toString()+" po ceni od: "+trenutnaCena);
                         indeksPoslednjegOdgovora++;
+                        LicitacijaClass.pobednik = pobednik;
                         prodatProizvod = true;
                     }
                 }
@@ -144,7 +147,7 @@ public class LicitacijaClass {
         lideriULicitaciji = new LinkedList<String>();
         indeksPoslednjegOdgovora = -1;
         pocelaLicitacija = false;
-        trenutnaCena = 0;
+        //trenutnaCena = 0;
         for(String users:korisniciNaCekanju){
             if(!korisniciULicitaciji.contains(users)){
                 korisniciULicitaciji.add(users);

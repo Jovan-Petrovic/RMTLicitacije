@@ -54,6 +54,7 @@ public class ServerNitClass extends Thread {
     static LinkedList<String> lideri = new LinkedList<String>();
     static LinkedList<String> vecPitan = new LinkedList<String>();
     static LicitacijaClass licitacija;
+    public double stanjeNaRacunu;
           
 
     ServerNitClass(Socket klijentSoket, LinkedList<KorisnikClass> korisnici, LinkedList<StavkaProizvodaClass> poizvodi, ServerNitClass[] klijenti,int i) {
@@ -88,10 +89,40 @@ public class ServerNitClass extends Thread {
         } else {               //moze malo da se uspori
             LicitacijaClass.drzanjeNaCekanju(this);
         }
-        
+   
+        umanjivanjeIznosaNaRacunu();
+
         while (proizvodiUBazi != null) {
             LicitacijaClass.trenutnoLicitiraniProizvod = sledeciProizvodZaLicitaciju();
             LicitacijaClass.klasicnaLicitacija(klijentiNiti);
+            umanjivanjeIznosaNaRacunu();
+      }
+    }
+    
+    public void umanjivanjeIznosaNaRacunu(){
+        if(username.equals(LicitacijaClass.pobednik)){
+            for(KorisnikClass korisnik:registrovaniKorisnici){
+                if(korisnik.getUsername().equals(username)){
+                    double iznosNaKartici = korisnik.getKarticeKorisnika().getIznos();
+                    korisnik.getKarticeKorisnika().setIznos(iznosNaKartici-LicitacijaClass.trenutnaCena);
+                    osvezavanjeBazeKorisnika();
+                }
+            }
+        }
+    }
+    
+    public void osvezavanjeBazeKorisnika(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try {
+            FileWriter upisivac = new FileWriter("files/korisnici.json");
+            String korisnikUString = gson.toJson(registrovaniKorisnici);
+
+            upisivac.write(korisnikUString);
+
+            upisivac.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -952,6 +983,7 @@ public class ServerNitClass extends Thread {
         onlineKorisnici.add(k);
         System.out.println(k.getImePrezimeKorisnika() + " se konektovao!");
         username = k.getUsername();
+        stanjeNaRacunu = k.getKarticeKorisnika().getIznos();
         izlazniTokKaKlijentu.println("Uspesna prijava!");
         return true;
     }
