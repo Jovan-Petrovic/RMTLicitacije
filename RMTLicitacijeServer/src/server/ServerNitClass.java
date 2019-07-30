@@ -84,13 +84,20 @@ public class ServerNitClass extends Thread {
                 //ovde mozemo malko da usporimo sa nekim timeout-om
             }
         }
-       while(LicitacijaClass.imaJosProizvoda){
-           if(!LicitacijaClass.pocelaLicitacija){
-               LicitacijaClass.Licitiranje(klijentiNiti,username);
-           }else{               //moze malo da se uspori
-               izlazniTokKaKlijentu.println("Licitacija u toku, molimo sacekajte");
-           }
-       }
+                
+        if (!LicitacijaClass.pocelaLicitacija) {
+            LicitacijaClass.Licitiranje(klijentiNiti, username);
+        } else {               //moze malo da se uspori
+            LicitacijaClass.drzanjeNaCekanju(this);
+        }
+        for(StavkaProizvodaClass s:proizvodiUBazi){
+            if(s.equals(LicitacijaClass.trenutnoLicitiraniProizvod)){
+                proizvodiUBazi.remove(s);
+                LicitacijaClass.trenutnoLicitiraniProizvod = proizvodiUBazi.getFirst();
+            }
+        }
+        LicitacijaClass.Licitiranje(klijentiNiti, username);
+
     }
     
     

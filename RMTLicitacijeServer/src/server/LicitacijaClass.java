@@ -23,6 +23,7 @@ public class LicitacijaClass {
     public static LinkedList<String> lideriULicitaciji = new LinkedList<String>();
     public static boolean pocelaLicitacija = false;
     public static boolean imaJosProizvoda = true;
+    
 
    
     public LicitacijaClass() {
@@ -45,18 +46,20 @@ public class LicitacijaClass {
        trenutnaCena = trenutnoLicitiraniProizvod.getCena();
         
        // pocelaLicitacija = true;
-        korisniciULicitaciji.add(username);
-       
-       nudjenjeProizvoda(klijenti);
-        String izbor="";
+        if (!korisniciULicitaciji.contains(username)) {
+            korisniciULicitaciji.add(username);
+        }
+
+        nudjenjeProizvoda(klijenti);
+        String izbor = "";
         indeksPoslednjegOdgovora = -1;
-        do{
+        do {
             if(indeksPoslednjegOdgovora != -1){
                 trenutnaCena = povecanaCena(trenutnaCena);
             }
             indeksPoslednjegOdgovora = -1;
             nadmetanje(klijenti, trenutnaCena);
-        } while (lideriULicitaciji.size() != 1 && lideriULicitaciji.size() != 0);
+        } while (lideriULicitaciji.size() > 1);
         indeksPoslednjegOdgovora = -1;
         if (lideriULicitaciji.size() == 0) {
             for (int i = 0; i < klijenti.length; i++) {
@@ -77,6 +80,18 @@ public class LicitacijaClass {
                     }
                 }
             }
+        }
+        
+        lideriULicitaciji = null;
+        lideriULicitaciji = new LinkedList<String>();
+        indeksPoslednjegOdgovora = -1;
+        pocelaLicitacija = false;
+        trenutnaCena = 0;
+    }
+    
+    public static void drzanjeNaCekanju(ServerNitClass nit){
+        while (pocelaLicitacija) {            
+            nit.izlazniTokKaKlijentu.println("Cekajte dok se ne zavrsi zapoceta licitacija!");
         }
     }
     
