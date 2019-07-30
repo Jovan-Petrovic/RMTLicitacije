@@ -73,8 +73,6 @@ public class ServerNitClass extends Thread {
             LicitacijaClass.trenutnoLicitiraniProizvod = proizvodiUBazi.getFirst();
         }
     }
-
-    
     
     private void Licitacija() {
         if (LicitacijaClass.korisniciULicitaciji.size() == 0) {
@@ -102,6 +100,7 @@ public class ServerNitClass extends Thread {
         StavkaProizvodaClass elementZaPrebacivanje = null;
         if(LicitacijaClass.prodatProizvod){
             prodatProizvod=proizvodiUBazi.pop();
+            
             //napraviti metode za pamcenje prozivoda za korisnika
         }else{
             elementZaPrebacivanje = proizvodiUBazi.pop();
@@ -111,9 +110,6 @@ public class ServerNitClass extends Thread {
         LicitacijaClass.prodatProizvod = false;
         return proizvodiUBazi.getFirst();
     }
-    
-
-    
     
     public void LicitacijaC() {
         StavkaProizvodaClass trenutnoLicitirani = null;
@@ -862,35 +858,34 @@ public class ServerNitClass extends Thread {
             KorisnikClass noviKorisnik = new KorisnikClass(brojKorisnika++, imePrezime, username, password);
             registrovaniKorisnici.add(noviKorisnik);
             String brojKartice = null;
-            boolean temp = false;
-            do {
-                izlazniTokKaKlijentu.println("Unesite broj kartice koju zelite da koristite: ");
-                try {
-                    brojKartice = ulazniTokOdKlijenta.readLine();
-                } catch (IOException ex) {
-                    Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                //try?catch
-                int IDKartice = Integer.parseInt(brojKartice);
-                KarticaClass novaKartica = new KarticaClass(IDKartice, KarticaClass.TipKartice.Debitna, 2500);
-                for (KorisnikClass k : registrovaniKorisnici) {
-                    if (noviKorisnik.IDKorisnika == k.IDKorisnika) {
-                        k.dodajKarticu(novaKartica);
-                    }
-                }
-                izlazniTokKaKlijentu.println("Jos kartica(DA/NE): ");
+            String tipKartice = null;
 
-                try {
-                    String izbor = ulazniTokOdKlijenta.readLine();
-                    if (izbor.equals("da") || izbor.equals("Da") || izbor.equals("DA") || izbor.equals("dA")) {
-                        temp = true;
-                    } else {
-                        break;
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
+            izlazniTokKaKlijentu.println("Unesite broj kartice koju zelite da koristite: ");
+            try {
+                brojKartice = ulazniTokOdKlijenta.readLine();
+            } catch (IOException ex) {
+                Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            izlazniTokKaKlijentu.println("Unesite tip kartice koju zelite da koristite (1-Debitna,2-Kreditna):");
+            try {
+                tipKartice = ulazniTokOdKlijenta.readLine();
+            } catch (IOException ex) {
+                Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //try?catch
+            int IDKartice = Integer.parseInt(brojKartice);
+            KarticaClass novaKartica = null;
+            if (tipKartice.equals("1")) {
+                novaKartica = new KarticaClass(IDKartice, KarticaClass.TipKartice.Debitna, 2000);
+            } else {
+                novaKartica = new KarticaClass(IDKartice, KarticaClass.TipKartice.Kreditna, 2000);
+            }
+            for (KorisnikClass k : registrovaniKorisnici) {
+                if (noviKorisnik.IDKorisnika == k.IDKorisnika) {
+                    k.setKarticeKorisnika(novaKartica);
                 }
-            } while (temp);
+            }
+
             System.out.println(noviKorisnik.getUsername() + " se registrovao!");
             dodavanjeNovogKorisnikaUFile();
             izlazniTokKaKlijentu.println("Uspesno ste se registrovali!");
@@ -983,9 +978,7 @@ public class ServerNitClass extends Thread {
         izlazniTokKaKlijentu.println("IDKartice" + "\t" + "Iznos");
         for (KorisnikClass k : registrovaniKorisnici) {
             if (k.username.equals(username)) {
-                for (KarticaClass kartica : k.getKarticeKorisnika()) {
-                    izlazniTokKaKlijentu.println(kartica.getIDKartice() + "\t" + kartica.getIznos());
-                }
+                    izlazniTokKaKlijentu.println(k.getKarticeKorisnika().getIDKartice() + "\t" + k.getKarticeKorisnika().getIznos());
             }
         }
     }
@@ -1013,13 +1006,8 @@ public class ServerNitClass extends Thread {
         iznos = Double.parseDouble(tempIznos);
         for (KorisnikClass korisnik : registrovaniKorisnici) {
             if (korisnik.getUsername().equals(username)) {
-                for (KarticaClass kartice : korisnik.getKarticeKorisnika()) {
-                    if (kartice.getIDKartice() == IDKartice) {
-                        kartice.setIznos(kartice.getIznos() + iznos);
-                        dodavanjeNovogKorisnikaUFile();
-                        return;
-                    }
-                }
+                double trenutnoStanje = korisnik.getKarticeKorisnika().getIznos();
+                korisnik.getKarticeKorisnika().setIznos(trenutnoStanje+iznos);
             }
         }
         izlazniTokKaKlijentu.println("Neuspesna dopuna!");

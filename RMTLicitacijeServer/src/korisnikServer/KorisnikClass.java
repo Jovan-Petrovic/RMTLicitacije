@@ -17,13 +17,21 @@ public class KorisnikClass {
     public String imePrezimeKorisnika;
     public String username;
     public String password;
-    public LinkedList<KarticaClass> karticeKorisnika = new LinkedList<KarticaClass>();
+    public KarticaClass karticeKorisnika;
 
     public KorisnikClass(int IDKorisnika, String imePrezimeKorisnika, String username, String password) {
         this.IDKorisnika = IDKorisnika;
         this.imePrezimeKorisnika = imePrezimeKorisnika;
         this.username = username;
         this.password = password;
+    }
+
+    public KarticaClass getKarticeKorisnika() {
+        return karticeKorisnika;
+    }
+
+    public void setKarticeKorisnika(KarticaClass karticeKorisnika) {
+        this.karticeKorisnika = karticeKorisnika;
     }
 
     public int getIDKorisnika() {
@@ -42,10 +50,7 @@ public class KorisnikClass {
         return password;
     }
 
-    public LinkedList<KarticaClass> getKarticeKorisnika() {
-        return karticeKorisnika;
-    }
-
+   
     public void setIDKorisnika(int IDKorisnika) {
         this.IDKorisnika = IDKorisnika;
     }
@@ -62,13 +67,7 @@ public class KorisnikClass {
         this.password = password;
     }
 
-    public void setKarticeKorisnika(LinkedList<KarticaClass> karticeKorisnika) {
-        this.karticeKorisnika = karticeKorisnika;
-    }
-    
-    public void dodajKarticu(KarticaClass kartica){
-        karticeKorisnika.add(kartica);
-    }
+ 
 
     @Override
     public boolean equals(Object obj) {
@@ -96,7 +95,7 @@ public class KorisnikClass {
     public static void main(String[] args) {
            KorisnikClass k = new KorisnikClass(0, "Mika", "m", "a");
            KarticaClass kr = new KarticaClass(0,TipKartice.Debitna,0.0);
-           k.dodajKarticu(kr);
+           
            System.out.println(k.toString());
     }
     

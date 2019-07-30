@@ -43,7 +43,7 @@ public class ServerClass {
        
         try {
             FileReader citac = new FileReader("files/korisnici.json");
-            java.lang.reflect.Type type = new TypeToken<LinkedList<KorisnikClass>>(){}.getType();
+            java.lang.reflect.Type type =  new TypeToken<LinkedList<KorisnikClass>>(){}.getType();
             
             LinkedList<KorisnikClass> korisniciTemp = gson.fromJson(citac, type);
             
