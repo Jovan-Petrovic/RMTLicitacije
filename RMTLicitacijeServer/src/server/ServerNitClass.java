@@ -90,17 +90,27 @@ public class ServerNitClass extends Thread {
         } else {               //moze malo da se uspori
             LicitacijaClass.drzanjeNaCekanju(this);
         }
-        for(StavkaProizvodaClass s:proizvodiUBazi){
-            if(s.equals(LicitacijaClass.trenutnoLicitiraniProizvod)){
-                proizvodiUBazi.remove(s);
-                LicitacijaClass.trenutnoLicitiraniProizvod = proizvodiUBazi.getFirst();
-            }
+        
+        while (proizvodiUBazi != null) {            
+            LicitacijaClass.klasicnaLicitacija(klijentiNiti);
+            LicitacijaClass.trenutnoLicitiraniProizvod = sledeciProizvodZaLicitaciju();
         }
-        LicitacijaClass.Licitiranje(klijentiNiti, username);
-
     }
     
-    
+    public StavkaProizvodaClass sledeciProizvodZaLicitaciju(){
+        StavkaProizvodaClass prodatProizvod = null;
+        StavkaProizvodaClass elementZaPrebacivanje = null;
+        if(LicitacijaClass.prodatProizvod){
+            prodatProizvod=proizvodiUBazi.pop();
+            //napraviti metode za pamcenje prozivoda za korisnika
+        }else{
+            elementZaPrebacivanje = proizvodiUBazi.pop();
+            proizvodiUBazi.addLast(elementZaPrebacivanje);
+            //pomeri na kraj prvi i predji na sledeci
+        }
+        LicitacijaClass.prodatProizvod = false;
+        return proizvodiUBazi.getFirst();
+    }
     
 
     

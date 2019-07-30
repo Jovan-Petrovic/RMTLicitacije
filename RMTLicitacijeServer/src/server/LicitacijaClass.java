@@ -23,6 +23,8 @@ public class LicitacijaClass {
     public static LinkedList<String> lideriULicitaciji = new LinkedList<String>();
     public static boolean pocelaLicitacija = false;
     public static boolean imaJosProizvoda = true;
+    public static LinkedList<String> korisniciNaCekanju = new LinkedList<String>();
+    public static boolean prodatProizvod = false;
     
 
    
@@ -79,6 +81,7 @@ public class LicitacijaClass {
                     if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijenti[i].username)) {
                         klijenti[i].izlazniTokKaKlijentu.println("Pobedio je: "+pobednik+" i kupio prizvod: "+trenutnoLicitiraniProizvod.toString()+" po ceni od: "+trenutnaCena);
                         indeksPoslednjegOdgovora++;
+                        prodatProizvod = true;
                     }
                 }
             }
@@ -89,11 +92,76 @@ public class LicitacijaClass {
         indeksPoslednjegOdgovora = -1;
         pocelaLicitacija = false;
         trenutnaCena = 0;
+        for(String users:korisniciNaCekanju){
+            if(!korisniciULicitaciji.contains(users)){
+                korisniciULicitaciji.add(users);
+            }
+        }
+        korisniciNaCekanju = null;
+        korisniciNaCekanju = new LinkedList<String>();
+        //ovde pitati hoce li jos da se igraju
     }
     
-    public static void drzanjeNaCekanju(ServerNitClass nit){
-        while (pocelaLicitacija) {            
-            nit.izlazniTokKaKlijentu.println("Cekajte dok se ne zavrsi zapoceta licitacija!");
+    public static void klasicnaLicitacija(ServerNitClass[] niti){
+        trenutnaCena = trenutnoLicitiraniProizvod.getCena();
+        
+        nudjenjeProizvoda(niti);
+        
+        indeksPoslednjegOdgovora = -1;
+        do {
+            if(indeksPoslednjegOdgovora != -1){
+                trenutnaCena = povecanaCena(trenutnaCena);
+            }
+            indeksPoslednjegOdgovora = -1;
+            nadmetanje(niti, trenutnaCena);
+        } while (lideriULicitaciji.size() > 1);
+        indeksPoslednjegOdgovora = -1;
+        
+        
+        if (lideriULicitaciji.size() == 0) {
+            for (int i = 0; i < niti.length; i++) {
+                if (niti[i] != null) {
+                    if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(niti[i].username)) {
+                        niti[i].izlazniTokKaKlijentu.println("Nema zainteresovanih za proizvod!");
+                        indeksPoslednjegOdgovora++;
+                    }
+                }
+            }
+        }else{
+            String pobednik = lideriULicitaciji.getFirst();
+            for (int i = 0; i < niti.length; i++) {
+                if (niti[i] != null) {
+                    if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(niti[i].username)) {
+                        niti[i].izlazniTokKaKlijentu.println("Pobedio je: "+pobednik+" i kupio prizvod: "+trenutnoLicitiraniProizvod.toString()+" po ceni od: "+trenutnaCena);
+                        indeksPoslednjegOdgovora++;
+                        prodatProizvod = true;
+                    }
+                }
+            }
+        }
+        
+        lideriULicitaciji = null;
+        lideriULicitaciji = new LinkedList<String>();
+        indeksPoslednjegOdgovora = -1;
+        pocelaLicitacija = false;
+        trenutnaCena = 0;
+        for(String users:korisniciNaCekanju){
+            if(!korisniciULicitaciji.contains(users)){
+                korisniciULicitaciji.add(users);
+            }
+        }
+        korisniciNaCekanju = null;
+        korisniciNaCekanju = new LinkedList<String>();
+        //ovde pitati hoce li jos da se igraju
+        
+    }
+    
+    
+    
+    public static void drzanjeNaCekanju(ServerNitClass nit) {
+        nit.izlazniTokKaKlijentu.println("Cekajte dok se ne zavrsi zapoceta licitacija!");
+        korisniciNaCekanju.add(nit.username);
+        while (pocelaLicitacija) {
         }
     }
     
