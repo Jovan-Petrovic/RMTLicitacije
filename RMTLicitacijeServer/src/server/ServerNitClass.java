@@ -167,11 +167,25 @@ public class ServerNitClass extends Thread {
         for (KorisnikClass korisnik:registrovaniKorisnici) {
             if(korisnik.getUsername().equals(LicitacijaClass.trenutnoLicitiraniProizvod.getVlasnik()) && !LicitacijaClass.dodatNovacVlasniku){
                 double trenutanIznos =korisnik.getKarticeKorisnika().getIznos();
-                korisnik.getKarticeKorisnika().setIznos(trenutanIznos+LicitacijaClass.trenutnaCena);
+                korisnik.getKarticeKorisnika().setIznos(trenutanIznos+(LicitacijaClass.trenutnaCena*0.95));
+               KorisnikClass admin = adminObjekat();
+                if(admin != null){
+                     double trenutniIznos = admin.getKarticeKorisnika().getIznos();
+                     admin.getKarticeKorisnika().setIznos(trenutniIznos+(LicitacijaClass.trenutnaCena*0.05));
+                }
                 LicitacijaClass.dodatNovacVlasniku = true;
                 osvezavanjeBazeKorisnika();
             }
         }
+        
+    }
+    public KorisnikClass adminObjekat(){
+        for(KorisnikClass korisnik:registrovaniKorisnici){
+            if(korisnik.getUsername().equals("admin")){
+                return korisnik;
+            }
+        }
+        return null;
     }
 
     public void osvezavanjeBazeKorisnika() {

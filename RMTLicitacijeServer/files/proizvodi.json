@@ -2,17 +2,6 @@
   {
     "proizvod": {
       "type": "sportskaOpremaClass",
-      "marka": "Atomic",
-      "model": "atomicX",
-      "IDProizvoda": 5,
-      "nazivProizvoda": "Skije"
-    },
-    "vlasnik": "jovanp98",
-    "cena": 4200.0
-  },
-  {
-    "proizvod": {
-      "type": "sportskaOpremaClass",
       "marka": "mkmk",
       "model": "csdcs",
       "IDProizvoda": 6,

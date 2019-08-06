@@ -11,6 +11,17 @@
     }
   },
   {
+    "IDKorisnika": 0,
+    "imePrezimeKorisnika": "Admin",
+    "username": "admin",
+    "password": "admin",
+    "karticeKorisnika": {
+      "IDKartice": 1000,
+      "tipKartice": "Debitna",
+      "iznos": 252.0
+    }
+  },
+  {
     "IDKorisnika": 2,
     "imePrezimeKorisnika": "x",
     "username": "x",
@@ -18,7 +29,7 @@
     "karticeKorisnika": {
       "IDKartice": 1,
       "tipKartice": "Debitna",
-      "iznos": 9205.0
+      "iznos": 4165.0
     }
   },
   {
@@ -51,7 +62,7 @@
     "karticeKorisnika": {
       "IDKartice": 987,
       "tipKartice": "Debitna",
-      "iznos": 3400.0
+      "iznos": 8188.0
     }
   },
   {
