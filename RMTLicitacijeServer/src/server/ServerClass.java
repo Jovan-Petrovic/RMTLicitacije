@@ -115,50 +115,14 @@ public class ServerClass {
     
     
     public static void ucitajTransakcije(){
-        java.lang.reflect.Type listType = new TypeToken<LinkedList<TransakcijaClass>>(){}.getType();
-        
-        RuntimeTypeAdapterFactory<ProizvodClass> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-                .of(ProizvodClass.class,"type")
-                .registerSubtype(KnjigaClass.class, "knjigaClass")
-                .registerSubtype(SportskaOpremaClass.class, "sportskaOpremaClass")
-                .registerSubtype(KozmetikaClass.class, "kozmetikaClass")
-                .registerSubtype(MuzickaOpremaClass.class, "muzickaOpremaClass")
-                .registerSubtype(KucniAparatiClass.class, "kucniAparatiClass");
-        
-        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
        
-        
         try {
             FileReader citac = new FileReader("files/transakcije.json");
-            java.lang.reflect.Type type = new TypeToken<LinkedList<TransakcijaClass>>(){}.getType();
+            java.lang.reflect.Type type =  new TypeToken<LinkedList<TransakcijaClass>>(){}.getType();
             
-            LinkedList<TransakcijaClass> transakcijaTemp = gson.fromJson(citac, listType);
+            LinkedList<TransakcijaClass> transakcijaTemp = gson.fromJson(citac, type);
             
-            if(transakcijaTemp == null)
-                return;
-            
-            for (TransakcijaClass stavkaTransakcije : transakcijaTemp) {
-                if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof KnjigaClass){
-                    KnjigaClass knjiga =(KnjigaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
-                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(knjiga);
-                    //System.out.println(knjiga.toString());
-                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof KozmetikaClass){
-                    KozmetikaClass kozmetika = (KozmetikaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
-                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(kozmetika);
-                   //System.out.println(kozmetika.toString());
-                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof KucniAparatiClass){
-                    KucniAparatiClass aparati = (KucniAparatiClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
-                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(aparati);
-                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof MuzickaOpremaClass){
-                    MuzickaOpremaClass oprema = (MuzickaOpremaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
-                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(oprema);
-                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof SportskaOpremaClass){
-                    SportskaOpremaClass sport = (SportskaOpremaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
-                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(sport);
-                }else{
-                    continue;
-                }
-            }
             transakcije = transakcijaTemp;
             
             citac.close();

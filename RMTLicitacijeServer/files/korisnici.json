@@ -7,7 +7,7 @@
     "karticeKorisnika": {
       "IDKartice": 101,
       "tipKartice": "Debitna",
-      "iznos": 7750.0
+      "iznos": 7150.0
     }
   },
   {
@@ -18,7 +18,7 @@
     "karticeKorisnika": {
       "IDKartice": 1000,
       "tipKartice": "Debitna",
-      "iznos": 372.0
+      "iznos": 392.0
     }
   },
   {
@@ -51,7 +51,7 @@
     "karticeKorisnika": {
       "IDKartice": 90,
       "tipKartice": "Debitna",
-      "iznos": 9675.0
+      "iznos": 10055.0
     }
   },
   {

@@ -75,8 +75,10 @@ public class ServerNitClass extends Thread {
         }
         klijentiNiti = klijenti;
         pocetniZaIspisProizvoda = i;
-        ServerNitClass.transakcije = transakcije;
-        if(klijenti[1] == null){
+        if (transakcije != null) {
+            ServerNitClass.transakcije = transakcije;
+        }
+        if (klijenti[1] == null) {
             LicitacijaClass.trenutnoLicitiraniProizvod = proizvodiUBazi.getFirst();
         }
     }
@@ -97,7 +99,7 @@ public class ServerNitClass extends Thread {
         }
    
         umanjivanjeIznosaNaRacunu();
-        upisivanjeTransakcije();
+        
 
         while (proizvodiUBazi != null) {
             LicitacijaClass.osvezenRazunPobednika = false;
@@ -107,14 +109,16 @@ public class ServerNitClass extends Thread {
             LicitacijaClass.klasicnaLicitacija(klijentiNiti);
              LicitacijaClass.uspesnaTransakcija = false;
             umanjivanjeIznosaNaRacunu();
-            upisivanjeTransakcije();
+         
         }
     }
     
     
     public void upisivanjeTransakcije(){
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        TransakcijaClass novaTransakcija = new TransakcijaClass(LicitacijaClass.trenutnoLicitiraniProizvod.getVlasnik(), LicitacijaClass.pobednik, LicitacijaClass.trenutnoLicitiraniProizvod, LicitacijaClass.trenutnaCena, timeStamp);
+        TransakcijaClass novaTransakcija = new TransakcijaClass(LicitacijaClass.trenutnoLicitiraniProizvod.getVlasnik(),
+                LicitacijaClass.pobednik, LicitacijaClass.trenutnoLicitiraniProizvod.getProizvod().getNazivProizvoda(),
+                LicitacijaClass.trenutnaCena, timeStamp);
         transakcije.add(novaTransakcija);
         upisivanjeTransakcijeUJson();
     }
@@ -203,6 +207,7 @@ public class ServerNitClass extends Thread {
                      double trenutniIznos = admin.getKarticeKorisnika().getIznos();
                      admin.getKarticeKorisnika().setIznos(trenutniIznos+(LicitacijaClass.trenutnaCena*0.05));
                 }
+               upisivanjeTransakcije();
                 LicitacijaClass.dodatNovacVlasniku = true;
                 osvezavanjeBazeKorisnika();
             }
@@ -918,7 +923,7 @@ public class ServerNitClass extends Thread {
                     Licitacija();
                     izborPrijavljen = izborPrijavljenMeni.Licitacija;
                 } else if (izborPrijavljen == izborPrijavljenMeni.Istorija || izborTemp.equals("5")) {
-                    Istorija();
+                    istorija();
                     izborPrijavljen = izborPrijavljenMeni.Istorija;
                 } else if (izborPrijavljen == izborPrijavljenMeni.DodavanjeNovogProizovda || izborTemp.equals("6")) {
                     dodavanjeNovogProizvoda();
@@ -956,8 +961,12 @@ public class ServerNitClass extends Thread {
                 + "\nUnesite Vas izbor:");
     }
     
-    public void Istorija(){
-        
+    public void istorija(){
+        for(TransakcijaClass transakcija:transakcije){
+          if(transakcija.getKupacUsername().equals(username) || transakcija.getProdavacUsername().equals(username)){
+              izlazniTokKaKlijentu.println(transakcija.toString());
+          }  
+        }
     }
 
     public void registracijaKorisnika() {

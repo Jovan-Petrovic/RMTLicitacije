@@ -14,14 +14,24 @@ import proizvodServer.StavkaProizvodaClass;
 public class TransakcijaClass {
     public String prodavacUsername;
     public String kupacUsername;
-    public StavkaProizvodaClass proizvodUTransakciji;
+    public String nazivProzivoda;
     public double prodajnaCena;
-     public String vremeTransakcije;
 
     @Override
     public String toString() {
-        return "TransakcijaClass{" + "prodavacUsername=" + prodavacUsername + ", kupacUsername=" + kupacUsername + ", proizvodUTransakciji=" + proizvodUTransakciji + ", prodajnaCena=" + prodajnaCena + ", vremeTransakcije=" + vremeTransakcije + '}';
+        return "TransakcijaClass{" + "prodavacUsername=" + prodavacUsername + ", kupacUsername=" + kupacUsername + ", nazivProzivoda=" + nazivProzivoda + ", prodajnaCena=" + prodajnaCena + ", vremeTransakcije=" + vremeTransakcije + '}';
     }
+     public String vremeTransakcije;
+
+    public void setNazivProzivoda(String nazivProzivoda) {
+        this.nazivProzivoda = nazivProzivoda;
+    }
+
+    public String getNazivProzivoda() {
+        return nazivProzivoda;
+    }
+
+ 
 
     public void setProdavacUsername(String prodavacUsername) {
         this.prodavacUsername = prodavacUsername;
@@ -31,9 +41,7 @@ public class TransakcijaClass {
         this.kupacUsername = kupacUsername;
     }
 
-    public void setProizvodUTransakciji(StavkaProizvodaClass proizvodUTransakciji) {
-        this.proizvodUTransakciji = proizvodUTransakciji;
-    }
+
 
     public void setProdajnaCena(double prodajnaCena) {
         this.prodajnaCena = prodajnaCena;
@@ -51,9 +59,6 @@ public class TransakcijaClass {
         return kupacUsername;
     }
 
-    public StavkaProizvodaClass getProizvodUTransakciji() {
-        return proizvodUTransakciji;
-    }
 
     public double getProdajnaCena() {
         return prodajnaCena;
@@ -63,10 +68,10 @@ public class TransakcijaClass {
         return vremeTransakcije;
     }
 
-    public TransakcijaClass(String prodavacUsername, String kupacUsername, StavkaProizvodaClass proizvodUTransakciji, double prodajnaCena, String vremeTransakcije) {
+    public TransakcijaClass(String prodavacUsername, String kupacUsername, String nazivProizvoda, double prodajnaCena, String vremeTransakcije) {
         this.prodavacUsername = prodavacUsername;
         this.kupacUsername = kupacUsername;
-        this.proizvodUTransakciji = proizvodUTransakciji;
+       this.nazivProzivoda = nazivProizvoda;
         this.prodajnaCena = prodajnaCena;
         this.vremeTransakcije = vremeTransakcije;
     }
