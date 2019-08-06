@@ -576,10 +576,16 @@ public class ServerNitClass extends Thread {
             pocetnaCena = 1000;
         }
         KnjigaClass novaKnjiga = null;
+        for(StavkaProizvodaClass stavka:proizvodiUBazi){
+            if(stavka.getProizvod().getIDProizvoda() > brojProizvoda){
+                brojProizvoda = stavka.getProizvod().getIDProizvoda();
+            }
+        }
+        brojProizvoda++;
         if (godinaIzdanja.equals("nepoznata")) {
-            novaKnjiga = new KnjigaClass(autorKnjige, izdavacKnjige, -1, brojProizvoda++, nazivKnjige);
+            novaKnjiga = new KnjigaClass(autorKnjige, izdavacKnjige, -1, brojProizvoda, nazivKnjige);
         } else {
-            novaKnjiga = new KnjigaClass(autorKnjige, izdavacKnjige, godinaIzdanjaInt, brojProizvoda++, nazivKnjige);
+            novaKnjiga = new KnjigaClass(autorKnjige, izdavacKnjige, godinaIzdanjaInt, brojProizvoda, nazivKnjige);
         }
         StavkaProizvodaClass noviProizvod = new StavkaProizvodaClass(novaKnjiga, username, pocetnaCena, null);
         proizvodiUBazi.add(noviProizvod);
@@ -644,7 +650,13 @@ public class ServerNitClass extends Thread {
         } else {
             namenjenZaPol = Pol.Muski;
         }
-        KozmetikaClass noviProizvod = new KozmetikaClass(proizvodjac, namenjenZaPol, brojProizvoda++, nazivProizvoda);
+        for (StavkaProizvodaClass stavka : proizvodiUBazi) {
+            if (stavka.getProizvod().getIDProizvoda() > brojProizvoda) {
+                brojProizvoda = stavka.getProizvod().getIDProizvoda();
+            }
+        }
+        brojProizvoda++;
+        KozmetikaClass noviProizvod = new KozmetikaClass(proizvodjac, namenjenZaPol, brojProizvoda, nazivProizvoda);
         izlazniTokKaKlijentu.println("Unesite pocetnu cenu (NAPOMENA: Ukoliko je cena uneta nepravilo automatski se nudi po ceni od 1000 dinara):");
         try {
             pocetnaCenaString = ulazniTokOdKlijenta.readLine();
@@ -693,10 +705,16 @@ public class ServerNitClass extends Thread {
         } catch (Exception e) {
             godinaProizvodnjeString = "nepoznata";
         }
+                for(StavkaProizvodaClass stavka:proizvodiUBazi){
+            if(stavka.getProizvod().getIDProizvoda() > brojProizvoda){
+                brojProizvoda = stavka.getProizvod().getIDProizvoda();
+            }
+        }
+        brojProizvoda++;
         if (godinaProizvodnjeString.equals("nepoznata")) {
-            noviProizvod = new KucniAparatiClass(proizvodjac, -1, brojProizvoda++, nazivProizvoda);
+            noviProizvod = new KucniAparatiClass(proizvodjac, -1, brojProizvoda, nazivProizvoda);
         } else {
-            noviProizvod = new KucniAparatiClass(proizvodjac, godinaProizvodnje, brojProizvoda++, nazivProizvoda);
+            noviProizvod = new KucniAparatiClass(proizvodjac, godinaProizvodnje, brojProizvoda, nazivProizvoda);
         }
         izlazniTokKaKlijentu.println("Unesite pocetnu cenu (NAPOMENA: Ukoliko je cena uneta nepravilo automatski se nudi po ceni od 1000 dinara):");
         try {
@@ -762,7 +780,13 @@ public class ServerNitClass extends Thread {
             izlazniTokKaKlijentu.println("Pogresan unos kategorije!");
             return;
         }
-        noviProizvod = new MuzickaOpremaClass(proizvodjac, kategorija, godinaProizvodnje, brojProizvoda++, nazivProizvoda);
+        for (StavkaProizvodaClass stavka : proizvodiUBazi) {
+            if (stavka.getProizvod().getIDProizvoda() > brojProizvoda) {
+                brojProizvoda = stavka.getProizvod().getIDProizvoda();
+            }
+        }
+        brojProizvoda++;
+        noviProizvod = new MuzickaOpremaClass(proizvodjac, kategorija, godinaProizvodnje, brojProizvoda, nazivProizvoda);
 
         izlazniTokKaKlijentu.println("Unesite pocetnu cenu (NAPOMENA: Ukoliko je cena uneta nepravilo automatski se nudi po ceni od 1000 dinara):");
         try {
@@ -808,8 +832,14 @@ public class ServerNitClass extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
         }
+        for (StavkaProizvodaClass stavka : proizvodiUBazi) {
+            if (stavka.getProizvod().getIDProizvoda() > brojProizvoda) {
+                brojProizvoda = stavka.getProizvod().getIDProizvoda();
+            }
+        }
+        brojProizvoda++;
 
-        noviProizvod = new SportskaOpremaClass(marka, model, brojProizvoda++, nazivProizvoda);
+        noviProizvod = new SportskaOpremaClass(marka, model, brojProizvoda, nazivProizvoda);
 
         izlazniTokKaKlijentu.println("Unesite pocetnu cenu (NAPOMENA: Ukoliko je cena uneta nepravilo automatski se nudi po ceni od 1000 dinara):");
         try {
