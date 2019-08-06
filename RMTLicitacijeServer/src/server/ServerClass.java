@@ -37,6 +37,7 @@ public class ServerClass {
     static ServerNitClass klijenti[] = new ServerNitClass[20];
     public static LinkedList<KorisnikClass> korisnici = new LinkedList<KorisnikClass>();
     public static LinkedList<StavkaProizvodaClass> proizvodiZaLicitaciju = new LinkedList<StavkaProizvodaClass>();
+    public static LinkedList<TransakcijaClass> transakcije = new LinkedList<TransakcijaClass>();
     
     public static void ucitajKorisnike(){
        Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -112,11 +113,71 @@ public class ServerClass {
         }
     }
     
+    
+    public static void ucitajTransakcije(){
+        java.lang.reflect.Type listType = new TypeToken<LinkedList<TransakcijaClass>>(){}.getType();
+        
+        RuntimeTypeAdapterFactory<ProizvodClass> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+                .of(ProizvodClass.class,"type")
+                .registerSubtype(KnjigaClass.class, "knjigaClass")
+                .registerSubtype(SportskaOpremaClass.class, "sportskaOpremaClass")
+                .registerSubtype(KozmetikaClass.class, "kozmetikaClass")
+                .registerSubtype(MuzickaOpremaClass.class, "muzickaOpremaClass")
+                .registerSubtype(KucniAparatiClass.class, "kucniAparatiClass");
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
+       
+        
+        try {
+            FileReader citac = new FileReader("files/transakcije.json");
+            java.lang.reflect.Type type = new TypeToken<LinkedList<TransakcijaClass>>(){}.getType();
+            
+            LinkedList<TransakcijaClass> transakcijaTemp = gson.fromJson(citac, listType);
+            
+            if(transakcijaTemp == null)
+                return;
+            
+            for (TransakcijaClass stavkaTransakcije : transakcijaTemp) {
+                if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof KnjigaClass){
+                    KnjigaClass knjiga =(KnjigaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
+                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(knjiga);
+                    //System.out.println(knjiga.toString());
+                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof KozmetikaClass){
+                    KozmetikaClass kozmetika = (KozmetikaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
+                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(kozmetika);
+                   //System.out.println(kozmetika.toString());
+                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof KucniAparatiClass){
+                    KucniAparatiClass aparati = (KucniAparatiClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
+                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(aparati);
+                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof MuzickaOpremaClass){
+                    MuzickaOpremaClass oprema = (MuzickaOpremaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
+                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(oprema);
+                }else if(stavkaTransakcije.getProizvodUTransakciji().getProizvod() instanceof SportskaOpremaClass){
+                    SportskaOpremaClass sport = (SportskaOpremaClass) stavkaTransakcije.getProizvodUTransakciji().getProizvod();
+                    stavkaTransakcije.getProizvodUTransakciji().setProizvod(sport);
+                }else{
+                    continue;
+                }
+            }
+            transakcije = transakcijaTemp;
+            
+            citac.close();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ServerClass.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    
     public static void main(String[] args) {
            int port = 22272;
            Socket klijentSoket = null;
            ucitajKorisnike();
            ucitajProizvode();
+           ucitajTransakcije();
         try {
             ServerSocket serverSoket = new ServerSocket(port);
             while(true){
@@ -125,7 +186,7 @@ public class ServerClass {
                 System.out.println("Klijent konektovan");
                 for(int i=0;i<klijenti.length;i++){
                     if(klijenti[i] == null){
-                        klijenti[i] = new ServerNitClass(klijentSoket,korisnici,proizvodiZaLicitaciju,klijenti,i);
+                        klijenti[i] = new ServerNitClass(klijentSoket,korisnici,proizvodiZaLicitaciju,klijenti,i,transakcije);
                         klijenti[i].start();
                         break;
                     }

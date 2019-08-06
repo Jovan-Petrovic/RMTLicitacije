@@ -1,0 +1,35 @@
+[
+  {
+    "prodavacUsername": "lukadlm97",
+    "kupacUsername": "v",
+    "proizvodUTransakciji": {
+      "proizvod": {
+        "autor": "a",
+        "izdavac": "a",
+        "godinaIzdanja": 2000,
+        "IDProizvoda": 0,
+        "nazivProizvoda": "a"
+      },
+      "vlasnik": "lukadlm97",
+      "cena": 200.0
+    },
+    "prodajnaCena": 200.0,
+    "vremeTransakcije": "20190806_170723"
+  },
+  {
+    "prodavacUsername": "lukadlm97",
+    "kupacUsername": "v",
+    "proizvodUTransakciji": {
+      "proizvod": {
+        "proizvodjac": "a",
+        "namenjenaZa": "Zenski",
+        "IDProizvoda": 1,
+        "nazivProizvoda": "a"
+      },
+      "vlasnik": "lukadlm97",
+      "cena": 2000.0
+    },
+    "prodajnaCena": 2000.0,
+    "vremeTransakcije": "20190806_170822"
+  }
+]

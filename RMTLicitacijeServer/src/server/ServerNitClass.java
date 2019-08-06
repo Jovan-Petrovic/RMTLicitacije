@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,9 +45,9 @@ public class ServerNitClass extends Thread {
     BufferedReader ulazniTokOdKlijenta = null;
     PrintStream izlazniTokKaKlijentu = null;
     Socket soketZaKomunikaciju = null;
-    LinkedList<KorisnikClass> registrovaniKorisnici = new LinkedList<KorisnikClass>();
+    static LinkedList<KorisnikClass> registrovaniKorisnici = new LinkedList<KorisnikClass>();
     LinkedList<KorisnikClass> onlineKorisnici = new LinkedList<KorisnikClass>();
-    LinkedList<StavkaProizvodaClass> proizvodiUBazi = new LinkedList<StavkaProizvodaClass>();
+    static LinkedList<StavkaProizvodaClass> proizvodiUBazi = new LinkedList<StavkaProizvodaClass>();
     // username-ovi korisnika koji su u licitaciji!
     static LinkedList<String> usernameULicitaciji = new LinkedList<String>();
     String username = null;
@@ -57,9 +59,10 @@ public class ServerNitClass extends Thread {
     static LinkedList<String> vecPitan = new LinkedList<String>();
     static LicitacijaClass licitacija;
     public double stanjeNaRacunu;
+    static LinkedList<TransakcijaClass> transakcije = new LinkedList<TransakcijaClass>();
           
 
-    ServerNitClass(Socket klijentSoket, LinkedList<KorisnikClass> korisnici, LinkedList<StavkaProizvodaClass> poizvodi, ServerNitClass[] klijenti,int i) {
+    ServerNitClass(Socket klijentSoket, LinkedList<KorisnikClass> korisnici, LinkedList<StavkaProizvodaClass> poizvodi, ServerNitClass[] klijenti,int i,LinkedList<TransakcijaClass> transakcije) {
         soketZaKomunikaciju = klijentSoket;
         registrovaniKorisnici = korisnici;
         brojKorisnika = korisnici.size() + 1;
@@ -72,6 +75,7 @@ public class ServerNitClass extends Thread {
         }
         klijentiNiti = klijenti;
         pocetniZaIspisProizvoda = i;
+        ServerNitClass.transakcije = transakcije;
         if(klijenti[1] == null){
             LicitacijaClass.trenutnoLicitiraniProizvod = proizvodiUBazi.getFirst();
         }
@@ -93,6 +97,7 @@ public class ServerNitClass extends Thread {
         }
    
         umanjivanjeIznosaNaRacunu();
+        upisivanjeTransakcije();
 
         while (proizvodiUBazi != null) {
             LicitacijaClass.osvezenRazunPobednika = false;
@@ -102,8 +107,33 @@ public class ServerNitClass extends Thread {
             LicitacijaClass.klasicnaLicitacija(klijentiNiti);
              LicitacijaClass.uspesnaTransakcija = false;
             umanjivanjeIznosaNaRacunu();
+            upisivanjeTransakcije();
         }
     }
+    
+    
+    public void upisivanjeTransakcije(){
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        TransakcijaClass novaTransakcija = new TransakcijaClass(LicitacijaClass.trenutnoLicitiraniProizvod.getVlasnik(), LicitacijaClass.pobednik, LicitacijaClass.trenutnoLicitiraniProizvod, LicitacijaClass.trenutnaCena, timeStamp);
+        transakcije.add(novaTransakcija);
+        upisivanjeTransakcijeUJson();
+    }
+    
+    public void upisivanjeTransakcijeUJson(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try {
+            FileWriter upisivac = new FileWriter("files/transakcije.json");
+            String transakcijaUString = gson.toJson(transakcije);
+
+            upisivac.write(transakcijaUString);
+
+            upisivac.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public void osvezavanjeBazeProizvoda() {
         RuntimeTypeAdapterFactory<ProizvodClass> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
@@ -888,7 +918,7 @@ public class ServerNitClass extends Thread {
                     Licitacija();
                     izborPrijavljen = izborPrijavljenMeni.Licitacija;
                 } else if (izborPrijavljen == izborPrijavljenMeni.Istorija || izborTemp.equals("5")) {
-                    izlazniTokKaKlijentu.println("ISTORIJA");
+                    Istorija();
                     izborPrijavljen = izborPrijavljenMeni.Istorija;
                 } else if (izborPrijavljen == izborPrijavljenMeni.DodavanjeNovogProizovda || izborTemp.equals("6")) {
                     dodavanjeNovogProizvoda();
@@ -924,6 +954,10 @@ public class ServerNitClass extends Thread {
                 + "\n6.Dodaj novi proizvod"
                 + "\n7.Odjava"
                 + "\nUnesite Vas izbor:");
+    }
+    
+    public void Istorija(){
+        
     }
 
     public void registracijaKorisnika() {
