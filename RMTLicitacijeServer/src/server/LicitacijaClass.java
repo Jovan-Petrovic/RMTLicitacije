@@ -179,8 +179,9 @@ public class LicitacijaClass {
                     if (izbor.toLowerCase().equals("da")) {
                         continue;
                     } else {
-                        korisniciZaUklanjanje.add(klijenti[j].username);
-                        klijenti[j].zaglavljeRazgledanja();
+                        //korisniciZaUklanjanje.add(klijenti[j].username);
+                        korisniciULicitaciji.remove(klijenti[j].username);
+                        klijenti[j].glavniMeni();
                     }
                 }
                 indeksPoslednjegOdgovora++;

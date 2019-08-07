@@ -61,5 +61,12 @@
     "nazivProzivoda": "xzps",
     "prodajnaCena": 500.0,
     "vremeTransakcije": "20190807_144551"
+  },
+  {
+    "prodavacUsername": "jovanp98",
+    "kupacUsername": "v",
+    "nazivProzivoda": "Skije",
+    "prodajnaCena": 4200.0,
+    "vremeTransakcije": "20190807_144957"
   }
 ]

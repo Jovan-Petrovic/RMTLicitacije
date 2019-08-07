@@ -1,14 +1,26 @@
 [
   {
     "proizvod": {
-      "type": "sportskaOpremaClass",
-      "marka": "Atomic",
-      "model": "atomicX",
+      "type": "knjigaClass",
+      "autor": "bla",
+      "izdavac": "popad",
+      "godinaIzdanja": 2019,
       "IDProizvoda": 5,
-      "nazivProizvoda": "Skije"
+      "nazivProizvoda": "blabla"
     },
-    "vlasnik": "jovanp98",
-    "cena": 4200.0
+    "vlasnik": "v",
+    "cena": 450.0
+  },
+  {
+    "proizvod": {
+      "type": "sportskaOpremaClass",
+      "marka": "dsa",
+      "model": "vca",
+      "IDProizvoda": 6,
+      "nazivProizvoda": "asd"
+    },
+    "vlasnik": "v",
+    "cena": 2000.0
   },
   {
     "proizvod": {
@@ -20,17 +32,5 @@
     },
     "vlasnik": "lukadlm97",
     "cena": 2000.0
-  },
-  {
-    "proizvod": {
-      "type": "knjigaClass",
-      "autor": "bla",
-      "izdavac": "popad",
-      "godinaIzdanja": 2019,
-      "IDProizvoda": 5,
-      "nazivProizvoda": "blabla"
-    },
-    "vlasnik": "v",
-    "cena": 450.0
   }
 ]

@@ -936,49 +936,58 @@ public class ServerNitClass extends Thread {
                 }
             } while (!prijavljen);
             // izlazniTokKaKlijentu.println(izbor);
-            izborPrijavljenMeni izborPrijavljen;
-            boolean odjava = true;
-            do {
-                izborPrijavljen = izborPrijavljenMeni.Nedefinisano;
-                prijavljenKorisnikMeni();
-                String izborTemp = ulazniTokOdKlijenta.readLine();
-                //try?catch,treba srediti da moze i sa brojem da se bira
-                //u sustini, parsirati u int i onda ubaciti dodatni uslov u ifu da moze i broj
-                try {
-                    izborPrijavljen = izborPrijavljenMeni.valueOf(izborTemp);
-                } catch (Exception e) {
-                    System.out.println("Unet je broj kao izbor");
-                }
-
-                if (izborPrijavljen == izborPrijavljenMeni.Stanje || izborTemp.equals("4")) {
-                    proveraStanja();
-                    izborPrijavljen = izborPrijavljenMeni.Stanje;
-                } else if (izborPrijavljen == izborPrijavljenMeni.Dopuna || izborTemp.equals("3")) {
-                    dopunaRacuna();
-                    izborPrijavljen = izborPrijavljenMeni.Dopuna;
-                } else if (izborPrijavljen == izborPrijavljenMeni.Razgledanje || izborTemp.equals("1")) {
-                    razgledanjeArtikala();
-                    izborPrijavljen = izborPrijavljenMeni.Razgledanje;
-                } else if (izborPrijavljen == izborPrijavljenMeni.Licitacija || izborTemp.equals("2")) {
-                    Licitacija();
-                    izborPrijavljen = izborPrijavljenMeni.Licitacija;
-                } else if (izborPrijavljen == izborPrijavljenMeni.Istorija || izborTemp.equals("5")) {
-                    istorija();
-                    izborPrijavljen = izborPrijavljenMeni.Istorija;
-                } else if (izborPrijavljen == izborPrijavljenMeni.DodavanjeNovogProizovda || izborTemp.equals("6")) {
-                    dodavanjeNovogProizvoda();
-                    izborPrijavljen = izborPrijavljenMeni.DodavanjeNovogProizovda;
-                } else if (izborPrijavljen == izborPrijavljenMeni.Odjava || izborTemp.equals("7")) {
-                    izlazniTokKaKlijentu.println("Dovidjenja!");
-                    System.out.println(username + " se diskonektovao!");
-                    return;
-                } else {
-                    izlazniTokKaKlijentu.println("Greska u unosu");
-                }
-            } while (odjava);
+            glavniMeni();
         } catch (IOException ex) {
             Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void glavniMeni(){
+        izborPrijavljenMeni izborPrijavljen;
+        boolean odjava = true;
+        do {
+            izborPrijavljen = izborPrijavljenMeni.Nedefinisano;
+            prijavljenKorisnikMeni();
+            String izborTemp ="";
+            try {
+                izborTemp = ulazniTokOdKlijenta.readLine();
+            } catch (IOException ex) {
+                Logger.getLogger(ServerNitClass.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //try?catch,treba srediti da moze i sa brojem da se bira
+            //u sustini, parsirati u int i onda ubaciti dodatni uslov u ifu da moze i broj
+            try {
+                izborPrijavljen = izborPrijavljenMeni.valueOf(izborTemp);
+            } catch (Exception e) {
+                System.out.println("Unet je broj kao izbor");
+            }
+
+            if (izborPrijavljen == izborPrijavljenMeni.Stanje || izborTemp.equals("4")) {
+                proveraStanja();
+                izborPrijavljen = izborPrijavljenMeni.Stanje;
+            } else if (izborPrijavljen == izborPrijavljenMeni.Dopuna || izborTemp.equals("3")) {
+                dopunaRacuna();
+                izborPrijavljen = izborPrijavljenMeni.Dopuna;
+            } else if (izborPrijavljen == izborPrijavljenMeni.Razgledanje || izborTemp.equals("1")) {
+                razgledanjeArtikala();
+                izborPrijavljen = izborPrijavljenMeni.Razgledanje;
+            } else if (izborPrijavljen == izborPrijavljenMeni.Licitacija || izborTemp.equals("2")) {
+                Licitacija();
+                izborPrijavljen = izborPrijavljenMeni.Licitacija;
+            } else if (izborPrijavljen == izborPrijavljenMeni.Istorija || izborTemp.equals("5")) {
+                istorija();
+                izborPrijavljen = izborPrijavljenMeni.Istorija;
+            } else if (izborPrijavljen == izborPrijavljenMeni.DodavanjeNovogProizovda || izborTemp.equals("6")) {
+                dodavanjeNovogProizvoda();
+                izborPrijavljen = izborPrijavljenMeni.DodavanjeNovogProizovda;
+            } else if (izborPrijavljen == izborPrijavljenMeni.Odjava || izborTemp.equals("7")) {
+                izlazniTokKaKlijentu.println("Dovidjenja!");
+                System.out.println(username + " se diskonektovao!");
+                return;
+            } else {
+                izlazniTokKaKlijentu.println("Greska u unosu");
+            }
+        } while (odjava);
     }
 
     public void prijavljivanjeKorisnikaMeni() {
@@ -1000,12 +1009,12 @@ public class ServerNitClass extends Thread {
                 + "\n7.Odjava"
                 + "\nUnesite Vas izbor:");
     }
-    
-    public void istorija(){
-        for(TransakcijaClass transakcija:transakcije){
-          if(transakcija.getKupacUsername().equals(username) || transakcija.getProdavacUsername().equals(username)){
-              izlazniTokKaKlijentu.println(transakcija.toString());
-          }  
+
+    public void istorija() {
+        for (TransakcijaClass transakcija : transakcije) {
+            if (transakcija.getKupacUsername().equals(username) || transakcija.getProdavacUsername().equals(username)) {
+                izlazniTokKaKlijentu.println(transakcija.toString());
+            }
         }
     }
 
