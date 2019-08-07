@@ -1,36 +1,58 @@
 [
-  {
-    "proizvod": {
-      "type": "knjigaClass",
-      "autor": "bla",
-      "izdavac": "popad",
-      "godinaIzdanja": 2019,
-      "IDProizvoda": 5,
-      "nazivProizvoda": "blabla"
-    },
-    "vlasnik": "v",
-    "cena": 450.0
-  },
-  {
-    "proizvod": {
-      "type": "sportskaOpremaClass",
-      "marka": "dsa",
-      "model": "vca",
-      "IDProizvoda": 6,
-      "nazivProizvoda": "asd"
-    },
-    "vlasnik": "v",
-    "cena": 2000.0
-  },
-  {
-    "proizvod": {
-      "type": "kozmetikaClass",
-      "proizvodjac": "a",
-      "namenjenaZa": "Zenski",
-      "IDProizvoda": 1,
-      "nazivProizvoda": "a"
-    },
-    "vlasnik": "lukadlm97",
-    "cena": 2000.0
-  }
+{
+"proizvod": {
+"type": "kozmetikaClass",
+"proizvodjac": "a",
+"namenjenaZa": "Zenski",
+"IDProizvoda": 1,
+"nazivProizvoda": "a"
+},
+"vlasnik": "lukadlm97",
+"cena": 2000.0
+},
+{
+"proizvod": {
+"type": "knjigaClass",
+"autor": "bla",
+"izdavac": "popad",
+"godinaIzdanja": 2019,
+"IDProizvoda": 5,
+"nazivProizvoda": "blabla"
+},
+"vlasnik": "v",
+"cena": 450.0
+},
+{
+"proizvod": {
+"type": "kucniAparatiClass",
+"proizvodjac": "podpa",
+"godinaProizvodnje": 2012,
+"IDProizvoda": 6,
+"nazivProizvoda": "nadaj"
+},
+"vlasnik": "v",
+"cena": 650.0
+},
+{
+"proizvod": {
+"type": "sportskaOpremaClass",
+"marka": "opopd",
+"model": " nkjnnkj",
+"IDProizvoda": 7,
+"nazivProizvoda": "xzps"
+},
+"vlasnik": "v",
+"cena": 500.0
+},
+{
+"proizvod": {
+"type": "sportskaOpremaClass",
+"marka": "Atomic",
+"model": "atomicX",
+"IDProizvoda": 5,
+"nazivProizvoda": "Skije"
+},
+"vlasnik": "jovanp98",
+"cena": 4200.0
+}
 ]

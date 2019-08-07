@@ -181,7 +181,7 @@ public class LicitacijaClass {
                     } else {
                         //korisniciZaUklanjanje.add(klijenti[j].username);
                         korisniciULicitaciji.remove(klijenti[j].username);
-                        klijenti[j].glavniMeni();
+                        //klijenti[j].glavniMeni();
                     }
                 }
                 indeksPoslednjegOdgovora++;
