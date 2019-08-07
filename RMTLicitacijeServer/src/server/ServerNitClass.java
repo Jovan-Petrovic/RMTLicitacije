@@ -99,6 +99,7 @@ public class ServerNitClass extends Thread {
         }
    
         umanjivanjeIznosaNaRacunu();
+  
         
 
         while (proizvodiUBazi != null) {
@@ -111,6 +112,15 @@ public class ServerNitClass extends Thread {
             umanjivanjeIznosaNaRacunu();
          
         }
+    }
+    
+    public boolean trebaDaBudeUklonjen(){
+        if(LicitacijaClass.korisniciZaUklanjanje.contains(username)){
+            LicitacijaClass.korisniciULicitaciji.remove(username);
+            LicitacijaClass.korisniciZaUklanjanje.remove(username);
+            return true;
+        }
+        return false;
     }
     
     

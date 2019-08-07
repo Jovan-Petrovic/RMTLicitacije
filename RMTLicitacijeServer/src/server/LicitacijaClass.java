@@ -29,6 +29,7 @@ public class LicitacijaClass {
     public static boolean osvezenRazunPobednika = false;
     public static boolean uspesnaTransakcija = false;
     public static boolean dodatNovacVlasniku = false;
+    public static LinkedList<String> korisniciZaUklanjanje = new LinkedList<String>();
     
 
    
@@ -104,7 +105,7 @@ public class LicitacijaClass {
         }
         korisniciNaCekanju = null;
         korisniciNaCekanju = new LinkedList<String>();
-        //ovde pitati hoce li jos da se igraju
+        ispitivanjeNastavkaLicitacije(klijenti);
     }
     
     public static void klasicnaLicitacija(ServerNitClass[] niti){
@@ -158,9 +159,35 @@ public class LicitacijaClass {
         }
         korisniciNaCekanju = null;
         korisniciNaCekanju = new LinkedList<String>();
-        //ovde pitati hoce li jos da se igraju
+        ispitivanjeNastavkaLicitacije(niti);
         
     }
+    
+    public static void ispitivanjeNastavkaLicitacije(ServerNitClass[] klijenti){
+        indeksPoslednjegOdgovora = -1;
+        String izbor="";
+        for (int j = 0; j < klijenti.length; j++) {
+            if (klijenti[j] != null) {
+                if (indeksPoslednjegOdgovora < j && korisniciULicitaciji.contains(klijenti[j].username)) {
+                    klijenti[j].izlazniTokKaKlijentu.println("Zelite li da ostanete u licitaciji? (da):");
+                    try {
+                        izbor = klijenti[j].ulazniTokOdKlijenta.readLine();
+                       
+                    } catch (IOException ex) {
+                        Logger.getLogger(LicitacijaClass.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if (izbor.toLowerCase().equals("da")) {
+                        continue;
+                    } else {
+                        korisniciZaUklanjanje.add(klijenti[j].username);
+                        klijenti[j].zaglavljeRazgledanja();
+                    }
+                }
+                indeksPoslednjegOdgovora++;
+            }
+        }
+    }
+   
     
     
     

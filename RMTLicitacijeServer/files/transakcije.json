@@ -12,5 +12,54 @@
     "nazivProzivoda": "a",
     "prodajnaCena": 200.0,
     "vremeTransakcije": "20190806_174613"
+  },
+  {
+    "prodavacUsername": "lukadlm97",
+    "kupacUsername": "x",
+    "nazivProzivoda": "a",
+    "prodajnaCena": 2400.0,
+    "vremeTransakcije": "20190807_135756"
+  },
+  {
+    "prodavacUsername": "v",
+    "kupacUsername": "x",
+    "nazivProzivoda": "blabla",
+    "prodajnaCena": 450.0,
+    "vremeTransakcije": "20190807_135811"
+  },
+  {
+    "prodavacUsername": "v",
+    "kupacUsername": "x",
+    "nazivProzivoda": "nadaj",
+    "prodajnaCena": 650.0,
+    "vremeTransakcije": "20190807_142327"
+  },
+  {
+    "prodavacUsername": "v",
+    "kupacUsername": "v",
+    "nazivProzivoda": "xzps",
+    "prodajnaCena": 600.0,
+    "vremeTransakcije": "20190807_142813"
+  },
+  {
+    "prodavacUsername": "jovanp98",
+    "kupacUsername": "v",
+    "nazivProzivoda": "Skije",
+    "prodajnaCena": 4200.0,
+    "vremeTransakcije": "20190807_142827"
+  },
+  {
+    "prodavacUsername": "v",
+    "kupacUsername": "v",
+    "nazivProzivoda": "nadaj",
+    "prodajnaCena": 650.0,
+    "vremeTransakcije": "20190807_144156"
+  },
+  {
+    "prodavacUsername": "v",
+    "kupacUsername": "x",
+    "nazivProzivoda": "xzps",
+    "prodajnaCena": 500.0,
+    "vremeTransakcije": "20190807_144551"
   }
 ]

@@ -1,6 +1,17 @@
 [
   {
     "proizvod": {
+      "type": "sportskaOpremaClass",
+      "marka": "Atomic",
+      "model": "atomicX",
+      "IDProizvoda": 5,
+      "nazivProizvoda": "Skije"
+    },
+    "vlasnik": "jovanp98",
+    "cena": 4200.0
+  },
+  {
+    "proizvod": {
       "type": "kozmetikaClass",
       "proizvodjac": "a",
       "namenjenaZa": "Zenski",
@@ -21,38 +32,5 @@
     },
     "vlasnik": "v",
     "cena": 450.0
-  },
-  {
-    "proizvod": {
-      "type": "kucniAparatiClass",
-      "proizvodjac": "podpa",
-      "godinaProizvodnje": 2012,
-      "IDProizvoda": 6,
-      "nazivProizvoda": "nadaj"
-    },
-    "vlasnik": "v",
-    "cena": 650.0
-  },
-  {
-    "proizvod": {
-      "type": "sportskaOpremaClass",
-      "marka": "opopd",
-      "model": " nkjnnkj",
-      "IDProizvoda": 7,
-      "nazivProizvoda": "xzps"
-    },
-    "vlasnik": "v",
-    "cena": 500.0
-  },
-  {
-    "proizvod": {
-      "type": "sportskaOpremaClass",
-      "marka": "Atomic",
-      "model": "atomicX",
-      "IDProizvoda": 5,
-      "nazivProizvoda": "Skije"
-    },
-    "vlasnik": "jovanp98",
-    "cena": 4200.0
   }
 ]
