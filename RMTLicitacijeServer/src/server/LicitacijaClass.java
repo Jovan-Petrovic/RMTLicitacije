@@ -49,14 +49,14 @@ public class LicitacijaClass {
         return "Molimo sacekate dok se ne pojavi jos neko u licitaciji!";
     }
     
-    public static void Licitiranje(ServerNitClass[] klijenti,String username){
+    public static void Licitiranje(ServerNitClass[] klijenti,String username) {
        trenutnaCena = trenutnoLicitiraniProizvod.getCena();
         
        // pocelaLicitacija = true;
         if (!korisniciULicitaciji.contains(username)) {
             korisniciULicitaciji.add(username);
         }
-
+        indeksPoslednjegOdgovora = -1;
         nudjenjeProizvoda(klijenti);
         String izbor = "";
         indeksPoslednjegOdgovora = -1;
@@ -181,6 +181,7 @@ public class LicitacijaClass {
                     } else {
                         //korisniciZaUklanjanje.add(klijenti[j].username);
                         korisniciULicitaciji.remove(klijenti[j].username);
+                        //klijenti[j].notify();
                         //klijenti[j].glavniMeni();
                     }
                 }
@@ -232,6 +233,7 @@ public class LicitacijaClass {
     
     
     public static void nudjenjeProizvoda(ServerNitClass[] klijenti){
+        indeksPoslednjegOdgovora = -1;
          for (int i = 0; i < klijenti.length; i++) {
             if (klijenti[i] != null) {
                 if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijenti[i].username)) {

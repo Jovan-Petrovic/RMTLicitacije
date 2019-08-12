@@ -7,7 +7,7 @@
     "karticeKorisnika": {
       "IDKartice": 101,
       "tipKartice": "Debitna",
-      "iznos": 207.5
+      "iznos": 13595.0
     }
   },
   {
@@ -18,7 +18,7 @@
     "karticeKorisnika": {
       "IDKartice": 1000,
       "tipKartice": "Debitna",
-      "iznos": 1074.5
+      "iznos": 11855.0
     }
   },
   {
@@ -29,7 +29,7 @@
     "karticeKorisnika": {
       "IDKartice": 1,
       "tipKartice": "Debitna",
-      "iznos": 165.0
+      "iznos": 350.0
     }
   },
   {
@@ -40,7 +40,7 @@
     "karticeKorisnika": {
       "IDKartice": 90,
       "tipKartice": "Debitna",
-      "iznos": 10200.0
+      "iznos": 5160.0
     }
   },
   {
@@ -51,7 +51,7 @@
     "karticeKorisnika": {
       "IDKartice": 90,
       "tipKartice": "Debitna",
-      "iznos": 12335.0
+      "iznos": 14235.0
     }
   },
   {
@@ -62,7 +62,7 @@
     "karticeKorisnika": {
       "IDKartice": 987,
       "tipKartice": "Debitna",
-      "iznos": 16168.0
+      "iznos": 20956.0
     }
   },
   {
