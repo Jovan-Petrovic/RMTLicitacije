@@ -278,5 +278,12 @@
     "nazivProzivoda": "blabla",
     "prodajnaCena": 450.0,
     "vremeTransakcije": "20190812_131836"
+  },
+  {
+    "prodavacUsername": "jovanp98",
+    "kupacUsername": "v",
+    "nazivProzivoda": "Skije",
+    "prodajnaCena": 4200.0,
+    "vremeTransakcije": "20190828_095804"
   }
 ]

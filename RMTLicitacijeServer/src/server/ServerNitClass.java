@@ -175,6 +175,18 @@ public class ServerNitClass extends Thread {
     }
     
     public void umanjivanjeIznosaNaRacunu() {
+        if (LicitacijaClass.pobednik.equals(LicitacijaClass.trenutnoLicitiraniProizvod.vlasnik)) {
+            LicitacijaClass.uspesnaTransakcija = false;
+            for (int i = 0; i < klijentiNiti.length; i++) {
+                if (klijentiNiti[i] != null) {
+                    if (indeksPoslednjegOdgovora < i && korisniciULicitaciji.contains(klijentiNiti[i].username)) {
+                        klijentiNiti[i].izlazniTokKaKlijentu.println("Transakcija neuspela zbog vlasnistva.");
+                        indeksPoslednjegOdgovora++;
+                    }
+                }
+            }
+            return;
+        }
         for (KorisnikClass korisnik : registrovaniKorisnici) {
             if (korisnik.getUsername().equals(LicitacijaClass.pobednik) && !LicitacijaClass.osvezenRazunPobednika) {
                 double trenutniIznos = korisnik.getKarticeKorisnika().getIznos();
